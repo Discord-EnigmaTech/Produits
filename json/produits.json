@@ -1,5 +1,17 @@
 [
     {
+      "titre": "LG 24MP450P-B",
+      "texte": "Dalle IPS résolution FHD (1920x1080), 5ms GtG 75Hz, NTSC 72%, AMD FreeSync, inclinable, Fonctions Eye-Care",
+      "image": "https://m.media-amazon.com/images/I/71NX1QnwkSL._AC_SX679_.jpg",
+      "lien": "https://amzn.to/45Dbpvs"
+    },
+    {
+      "titre": "LG UltraGear 27GP850P-B",
+      "texte": "Gaming 27 pouces - dalle Nano IPS résolution QHD (2560x1440), 1ms GtG 165Hz (180Hz O/C), HDR 400, DCI-P3 98%, AMD FreeSync Premium, compatible NVIDIA G-Sync, HDMI 2.0",
+      "image": "https://m.media-amazon.com/images/I/51O2N8lDbVL.jpg",
+      "lien": "https://www.amazon.fr/LG-UltraGear-27GP850-B-Moniteur-Gaming/dp/B08VS8YG8H?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=7R7LIQ5J8ITY&keywords=Lg%2Bultragear%2B165hz%2B1440p&qid=1693685067&s=computers&sprefix=lg%2Bultragear%2B165hz%2B1440p%2Ccomputers%2C75&sr=1-1&th=1&linkCode=sl1&tag=enigmatech04-21&linkId=5ff3c92883df4de501b25b6951e91b60&language=fr_FR&ref_=as_li_ss_tl"
+    },
+    {
       "titre": "AOC 24G2ZE/BK",
       "texte": "Ecran gamer 23,8 pouces, 240Hz, dalle IPS, 1920x1080 full HD, 1ms GTG, Freesync premium te G-menu.",
       "image": "https://m.media-amazon.com/images/I/41F1ZZRhHvL.jpg",
