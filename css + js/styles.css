@@ -185,131 +185,126 @@ section#section1::before {
   opacity: 0.5;
 }
 
-@media (max-width: 768px) {
+/* Media Query for Large Screens */
+@media (min-width: 1024px) {
   .wrapper ul {
     display: grid;
-    align-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
   }
 }
 
+/* Media Query for Medium Screens */
+@media (max-width: 1023px) {
+  .wrapper ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Media Query for Small Screens */
 @media (max-width: 500px) {
   .img-card {
-    max-width: 250px;
+    max-width: 100%;
   }
 }
 
 .wrapper ul li {
-  margin: 10px 5px;
-  padding: 0;
+  margin: 10px;
   list-style-type: none;
-  display: inline-block;
-  vertical-align: top;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-
-/* Image Card */
+/* Image Card Styles */
 .img-card {
-  width:300px;
+  max-width: 300px; /* Set the maximum width for each card */
+  width: 100%;
   position: relative;
   border-radius: 5px;
   text-align: left;
-  background: rgb(255,255,255);
-  margin: 25px 12.5px 25px 12.5px;
-
-  -webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);
-  -moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);
-  -o-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);
-  box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);        
+  background: rgb(255, 255, 255);
+  margin: 25px 0;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-  .img-card .card-image {
-      position: relative;
-      margin: auto;
-      overflow: hidden;
-      border-radius: 5px 5px 0px 0px;
-      height: 275px;
-  }
+.img-card .card-image {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 5px 5px 0 0;
+}
 
-  .img-card .card-image img {
-      width:100%;
-      border-radius: 5px 5px 0px 0px;
-      
-      -webkit-transition: all 0.8s;
-      -moz-transition: all 0.8s;
-      -o-transition: all 0.8s;
-      transition: all 0.8s;
-  }
+.img-card .card-image img {
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  transition: all 0.8s;
+}
 
-  .img-card .card-image:hover img {
-      -webkit-transform: scale(1.1);
-      -moz-transform: scale(1.1);
-      -o-transform: scale(1.1);
-      transform: scale(1.1);
-  }        
+.img-card:hover .card-image img {
+  transform: scale(1.1);
+}
 
-  .img-card .card-text {
-    margin-top: 20px;
-      padding: 0 15px 15px;
-      line-height: 1.5;
-  }
+.img-card .card-text {
+  margin-top: 20px;
+  padding: 0 15px 15px;
+  line-height: 1.5;
+}
 
-  .img-card .card-link {
-      padding: 5px 15px 30px;
-      width: -webkit-fill-available;
-  }
+.img-card .card-link {
+  padding: 5px 15px 30px;
+  width: 100%;
+}
 
-  .img-card .card-link a {
-      text-decoration: none;
-      position: relative;
-      padding: 10px 0;
-  }
+.img-card .card-link a {
+  text-decoration: none;
+  position: relative;
+  padding: 10px 0;
+}
 
-  .img-card .card-link a:after {
-      top: 30px;
-      content: "";
-      display: block;
-      height: 2px;
-      left: 50%;
-      position: absolute;
-      width: 0;
+.img-card .card-link a:after {
+  top: 30px;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  width: 0;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+}
 
-      -webkit-transition: width 0.3s ease 0s, left 0.3s ease 0s;
-      -moz-transition: width 0.3s ease 0s, left 0.3s ease 0s;
-      -o-transition: width 0.3s ease 0s, left 0.3s ease 0s;
-      transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  }
+.img-card .card-link a:hover:after {
+  width: 100%;
+  left: 0;
+}
 
-  .img-card .card-link a:hover:after { 
-      width: 100%; 
-      left: 0; 
-  }        
-  
-  .img-card.iCard-style1 .card-title {
-      position: relative;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 500;
-      z-index: 1;
-      line-height: 1.2;
-      margin: 0 0 15px 0;
-      font-size: 22px;
-      color: #1d1e22;
-  }
+/* Additional Styling for Card Title and Text */
+.img-card .card-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: #1d1e22;
+  margin: 0 0 15px 0;
+}
 
-  
-  .img-card.iCard-style1 .card-text p {            
-      color: #191a1d;
-      line-height: 1.2;
-      font-family: 'Montserrat', sans-serif;
-  }
+.img-card .card-text p {
+  color: #191a1d;
+  font-family: 'Montserrat', sans-serif;
+}
 
-  .img-card.iCard-style1 .card-link a {
-      color: #7895CB;
-      font-size: 125%;              
-  }
+.img-card .card-link a {
+  color: #7895CB;
+  font-size: 125%;
+}
 
-  .img-card.iCard-style1 .card-link a:after {            
-      background: #4A55A2;
-  }
+.img-card .card-link a:after {
+  background: #4A55A2;
+}
+
+
 
 
 
