@@ -32,7 +32,7 @@ function createCard(data) {
 }
 
 // Fetch the JSON data
-fetch("./Data/data.json")
+fetch("./Data/Data.json")
   .then((response) => response.json())
   .then((dataArray) => {
     const container = document.querySelector(".container");
