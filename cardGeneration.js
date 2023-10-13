@@ -32,6 +32,7 @@ function createCard(data) {
 }
 
 // Fetch the JSON data
+
 fetch("./Data/Data.json")
   .then((response) => response.json())
   .then((dataArray) => {
