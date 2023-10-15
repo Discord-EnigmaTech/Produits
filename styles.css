@@ -138,7 +138,11 @@ tbody tr:nth-child(even) {
   margin: 50px 25px 50px 25px;
   transition: all 200ms ease;
   opacity: 1;
+  display: block; 
   justify-self: center !important;
+}
+.card.is-hidden {
+  display: none; 
 }
 .card p:not(.card__intro) {
   display: none;
@@ -558,11 +562,13 @@ input[type="submit"] {
   font-size: 16px;
   color: #fff;
   cursor: not-allowed;
+  z-index: 50;
 }
 
 .sf-field-submit.submitactive input[type="submit"] {
   background-color: #7895cb;
   cursor: pointer;
+  z-index: 50;
 }
 
 #filter li.sf-field-submit {
@@ -583,8 +589,16 @@ li.sf-field-submit:after {
 .sf-input-checkbox:checked + label {
   font-weight: bold !important; /* Example: Make the label bold when the checkbox is checked */
 }
-
 .sf-input-checkbox:checked + label:before {
+  border: 2px solid #7895cb; /* Border color for checked checkboxes */
+  background-color: #7895cb; /* Background color for checked checkboxes */
+  color: white; /* Show the check mark in white */
+}
+
+.sf-input-checkbox-price:checked + label {
+  font-weight: bold !important; /* Example: Make the label bold when the checkbox is checked */
+}
+.sf-input-checkbox-price:checked + label:before {
   border: 2px solid #7895cb; /* Border color for checked checkboxes */
   background-color: #7895cb; /* Background color for checked checkboxes */
   color: white; /* Show the check mark in white */
