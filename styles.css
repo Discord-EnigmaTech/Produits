@@ -129,6 +129,9 @@ tbody tr:nth-child(even) {
   .container {
     margin-top: 65px;
   }
+  .card__subject {
+    width: 75% !important;
+  }
 }
 
 .card {
@@ -141,6 +144,7 @@ tbody tr:nth-child(even) {
   display: block; 
   justify-self: center !important;
 }
+
 .card.is-hidden {
   display: none; 
 }
