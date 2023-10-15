@@ -43,6 +43,10 @@ function closeAllCardsExcept(exceptCard) {
   });
 }
 
+let hiddenCards = $();
+let appliedFilters = [];
+
+
 /* Price selecting system */
 
 $(document).ready(function () {
@@ -51,79 +55,54 @@ $(document).ready(function () {
 
   // Function to handle filtering
   function performPrice() {
-    var min_price = parseFloat(
-      $("#min_price").val().replace(",", "").replace("€", "").trim()
-    );
-    var max_price = parseFloat(
-      $("#max_price").val().replace(",", "").replace("€", "").trim()
-    );
-    var searchResults = $("#searchResults");
-
-    // Loop through all cards with the class "card"
-    $(".card").each(function () {
-      var card = $(this);
-      var cardPrice = parseFloat(
-        card.attr("class").split(" ")[2].replace(",", ".") // Assuming price is the third class
-      );
-
-      if (!isNaN(min_price) && !isNaN(max_price)) {
-        if (cardPrice >= min_price && cardPrice <= max_price) {
-          card.show(); // Show cards within the price range
-        } else {
-          card.hide(); // Hide cards outside the price range
-        }
+    // Get min and max values
+    const minPrice = parseFloat($('#min_price').val().replace(/,/g, '.'));
+    const maxPrice = parseFloat($('#max_price').val().replace(/,/g, '.'));
+    const visibleCards = $('.card').not(hiddenCards);
+  
+    // Apply the price filter
+    $(visibleCards).each(function () {
+      const card = $(this);
+      const cardPrice = parseFloat(card.data('price'));
+  
+      // Check if the card is hidden due to category filter
+      if (!appliedFilters.includes(card.attr("id"))) {
+        return;
+      }
+  
+      // Show/hide based on both category and price range
+      if (cardPrice >= minPrice && cardPrice <= maxPrice) {
+        card.removeClass('is-hidden');
+      } else {
+        card.addClass('is-hidden');
       }
     });
-
-    // Update the submit button state
-    updateSubmitButtonState();
-
-    // Check if at least one card is visible and the submit button is active
-    if (
-      $(".card:visible").length > 0 &&
-      $(".sf-field-submit").hasClass("submitactive")
-    ) {
-      // Update the result message
-      searchResults.text(
-        "Les produits affichés coûtent entre " +
-          min_price.toLocaleString("fr-FR", {
-            style: "currency",
-            currency: "EUR",
-          }) +
-          " et " +
-          max_price.toLocaleString("fr-FR", {
-            style: "currency",
-            currency: "EUR",
-          }) +
-          "."
-      );
-      searchResults.show(); // Show the result message
-    } else {
-      searchResults.hide(); // Hide the result message
-    }
+  
+    hiddenCards = hiddenCards.add(newlyHiddenCards);
   }
 
-  // Function to update the filter button state
-  function updateSubmitButtonState() {
-    var min_price = parseInt($("#min_price").val());
-    var max_price = parseInt($("#max_price").val());
-    var searchInput = $("#search-input").val().trim();
+// Function to update the filter button state
+function updateSubmitButtonState() {
+  var min_price = parseInt($("#min_price").val());
+  var max_price = parseInt($("#max_price").val());
+  var searchInput = $("#search-input").val().trim();
+  var allUnchecked = $(".sf-input-checkbox:checked").length === 0;
 
-    var shouldActivateButton =
-      searchInput.length > 0 || (!isNaN(min_price) && !isNaN(max_price));
-    var filterButton = $(".sf-field-submit");
+  var shouldActivateButton =
+    searchInput.length > 0 || (!isNaN(min_price) && !isNaN(max_price)) || allUnchecked;
+  var filterButton = $(".sf-field-submit");
 
-    if (shouldActivateButton) {
-      filterButton.addClass("submitactive");
-    } else {
-      filterButton.removeClass("submitactive");
-    }
-
-    // Update the slider values if input values are valid
-    if (!isNaN(min_price) && !isNaN(max_price)) {
-      slider.slider("values", [min_price, max_price]);
-    }
+  if (shouldActivateButton) {
+    filterButton.addClass("submitactive");
+  } else {
+    filterButton.removeClass("submitactive");
   }
+
+  // Update the slider values if input values are valid
+  if (!isNaN(min_price) && !isNaN(max_price)) {
+    slider.slider("values", [min_price, max_price]);
+  }
+}
 
   // Initialize slider with values from price inputs
   slider.slider({
@@ -136,8 +115,7 @@ $(document).ready(function () {
     slide: function (event, ui) {
       $("#min_price").val(ui.values[0]);
       $("#max_price").val(ui.values[1]);
-      updateSubmitButtonState();
-    },
+    }
   });
 
   // Initialize slider values on page load
@@ -150,116 +128,136 @@ $(document).ready(function () {
   /* Search Logic */
 
   function performSearch() {
-    var searchQuery = $("#search-input").val().toLowerCase();
-
-    // Loop through all cards and perform the search
-    $(".card").each(function () {
-      var card = $(this);
-      var title = card.find(".card__title").text().toLowerCase();
-      var description = card.find(".card__intro").text().toLowerCase();
-      var specs = card.find("#intro").text().toLowerCase(); // Assuming specs are inside an element with id "intro"
-
+    const searchQuery = $("#search-input").val().toLowerCase();
+    const visibleCards = $('.card').not(hiddenCards);
+  
+    // Apply the search filter
+    $(visibleCards).each(function () {
+      const card = $(this);
+      const title = card.find(".card__title").text().toLowerCase();
+      const description = card.find(".card__intro").text().toLowerCase();
+      const specs = card.find("#intro").text().toLowerCase();
+  
+      // Check if the card is hidden due to category and/or price filter
+      if (!appliedFilters.includes(card.attr("id")) || card.hasClass("is-hidden")) {
+        return;
+      }
+  
       // Check if the search query is found in the title, description, or specs
-      if (
-        title.includes(searchQuery) ||
-        description.includes(searchQuery) ||
-        specs.includes(searchQuery)
-      ) {
-        card.show(); // Show cards that match the search query
+      if (title.includes(searchQuery) || description.includes(searchQuery) || specs.includes(searchQuery)) {
+        card.removeClass('is-hidden');
       } else {
-        card.hide(); // Hide cards that do not match the search query
+        card.addClass('is-hidden');
       }
     });
-
-    // Update the submit button state
-    updateSubmitButtonState();
+  
+    hiddenCards = hiddenCards.add(newlyHiddenCards);
   }
 
-  /* Sorting radio buttons */
+/* Sorting radio buttons */
 
-  // Function to bind event listeners for the sorting radio buttons
-  function setupSortingEventListeners() {
-    $("#sf-input-sort-asc").on("change", function () {
-      if (this.checked) {
-        $("#sf-input-sort-desc").prop("checked", false);
-        sortCardsByPrice("asc");
-        updateCardPrices();
-      }
+// Function to update the cards' data-price attribute
+function updateCardPrices() {
+  $(".card").each(function (index) {
+    var card = $(this);
+    var classList = card.attr("class").split(" ");
+
+    // Find the class that contains the price information with non-breaking space as separator
+    var priceClass = classList.find(function (className) {
+      return /^[\d ]+,\d{2}$/.test(className); // Check for a pattern like "1 331,66"
     });
 
-    $("#sf-input-sort-desc").on("change", function () {
-      if (this.checked) {
-        $("#sf-input-sort-asc").prop("checked", false);
-        sortCardsByPrice("desc");
-        updateCardPrices();
-      }
-    });
+    var price;
+    if (priceClass) {
+      var priceString = priceClass.replace(/[^\d ,]/g, ''); // Extract digits, non-breaking spaces, and commas
+      price = parseFloat(priceString.replace(" ", "").replace(",", ".")); // Replace non-breaking space with a regular space and comma with a dot for parsing
+    } else {
+      price = 0; // Default price for cards without a valid price
+    }
+
+    card.data("price", price);
+    console.log("Card at index " + index + " has price: ", price); // Modified console message
+  });
+}
+
+
+// Function to sort cards by price (ascending or descending)
+function sortCardsByPrice(order) {
+  var cards = $(".card").toArray(); // Select all cards
+
+// Sort the cards based on price
+cards.sort(function (a, b) {
+  var priceA = parseFloat($(a).data("price")) * 100;
+  var priceB = parseFloat($(b).data("price")) * 100;
+
+  if (order === "asc") {
+    return priceA - priceB;
+  } else if (order === "desc") {
+    return priceB - priceA;
   }
+});
 
-  // Function to sort cards by price (ascending or descending)
-  function sortCardsByPrice(order) {
-    var cardContainer = $(".container");
-    var cards = $(".card:visible").toArray();
 
-    // Sort the cards based on price
-    cards.sort(function (a, b) {
-      var priceA = parseFloat($(a).data("price"));
-      var priceB = parseFloat($(b).data("price"));
+// Append the sorted cards back to the container
+$(".container").empty();
+cards.forEach(function (card, index) {
+  $(".container").append(card);
+  console.log("Card at index " + index + " has price: ", $(card).data("price"), "Parent element: ", $(card).parent().attr('class')); // Added console message
+});
 
-      if (order === "asc") {
-        return priceA - priceB;
-      } else if (order === "desc") {
-        return priceB - priceA;
-      }
-    });
+}
 
-    // Append the sorted cards to the container
-    cardContainer.empty();
-    cards.forEach(function (card) {
-      cardContainer.append(card);
-    });
-  }
 
-  // Function to update the cards' data-price attribute
-  function updateCardPrices() {
-    $(".card").each(function () {
-      var card = $(this);
-      var price = parseFloat(
-        card.attr("class").split(" ")[2].replace(",", ".")
-      );
-      card.data("price", price);
-    });
-  }
 
-  // Call the setupSortingEventListeners and updateCardPrices functions initially
-  setupSortingEventListeners();
-  updateCardPrices();
+// Function to set up sorting event listeners
+function setupSortingEventListeners() {
+  // Add event listeners to your radio buttons or sorting controls
+  // For example, if you have radio buttons with IDs 'asc' and 'desc'
+  $('#asc').on('click', function () {
+    sortCardsByPrice('asc');
+  });
+
+  $('#desc').on('click', function () {
+    sortCardsByPrice('desc');
+  });
+}
+
+// Call the setupSortingEventListeners and updateCardPrices functions initially
+setupSortingEventListeners();
+updateCardPrices();
+
 
   /* Filter System */
 
-  // Function to handle filtering
-  function performFilter() {
-    // Get all the checked checkbox IDs
-    var checkedFilters = $(".sf-input-checkbox:checked")
-      .map(function () {
-        return this.value;
-      })
-      .get();
+// Function to handle filtering
+function performFilter() {
+  // Get all the checked checkbox IDs
+  const visibleCards = $('.card').not(hiddenCards);
+  const checkedFilters = $(".sf-input-checkbox:checked")
+    .map(function () {
+      return this.value;
+    })
+    .get();
 
-    if (checkedFilters.length > 0) {
-      // Show cards with matching IDs and hide others
-      $(".card").each(function () {
-        var cardId = $(this).attr("id");
-        if (checkedFilters.includes(cardId)) {
-          $(this).show();
-        } else {
-          $(this).hide();
-        }
-      });
-    } else {
-      $(".card").show();
-    }
+  // Update the applied filters and keep track of them
+  appliedFilters = checkedFilters;
+
+  // Apply the category filter
+  if (checkedFilters.length > 0) {
+    $(visibleCards).each(function () {
+      const cardId = $(this).attr("id");
+      if (checkedFilters.includes(cardId)) {
+        $(this).removeClass('is-hidden');
+      } else {
+        $(this).addClass('is-hidden');
+      }
+    });
+  } else {
+    $(visibleCards).removeClass('is-hidden');
   }
+
+  hiddenCards = hiddenCards.add(newlyHiddenCards);
+}
 
   /* Filter Menu */
 
@@ -361,9 +359,6 @@ $(document).ready(function () {
     $("#close-button").click(function () {
       // Reduce the opacity of the wrapper to 0
       $("#wrapper").css("opacity", 0);
-      setupSortingEventListeners();
-      updateCardPrices();
-      performFilter();
 
       // After a brief delay, hide the wrapper and deactivate the button
       setTimeout(function () {
@@ -386,27 +381,41 @@ $(document).ready(function () {
 
   $("#search-input").on("input", function () {
     updateSubmitButtonState();
+    performSearch();
   });
 
   $("#min_price, #max_price").on("input", function () {
     updateSubmitButtonState();
+    performPrice();
   });
 
-  $(document).on("click", ".sf-input-checkbox, .sf-input-radio", function () {
+  $(document).on("click", ".sf-input-checkbox", function () {
     containerPrice.toggleClass(
       "filter-opened",
       $(this)
         .closest(".sf-field-taxonomy-geschlecht, .sf-field-taxonomy-anlass")
         .hasClass("active")
     );
+    performFilter();
   });
+
+$(".sf-input-checkbox").on("change", function() {
+  // Check if all checkboxes are unchecked
+  if ($(".sf-input-checkbox:checked").length === 0) {
+    performFilter();
+  } else {
+    performFilter();
+  }
+});
 
   $("#min_price, #max_price").on("change", function () {
     updateSubmitButtonState();
+    performPrice();
   });
 
   $("#min_price, #max_price").on("paste keyup", function () {
     updateSubmitButtonState();
+    performPrice();
   });
 
   // Event listener for checkbox clicks
@@ -419,14 +428,34 @@ $(document).ready(function () {
       .get();
   });
 
-  // Event listener for the filter submit button
-  $(".sf-field-submit input").on("click", function (e) {
-    e.preventDefault();
+  $(".sf-input-checkbox").on("change", function () {
     performFilter();
     performPrice();
     performSearch();
-    setupSortingEventListeners();
-    updateCardPrices();
+  });
+
+    // Function to bind event listeners for the sorting radio buttons
+    function setupSortingEventListeners() {
+      $("#sf-input-sort-asc").on("change", function () {
+        if (this.checked) {
+          $("#sf-input-sort-desc").prop("checked", false);
+          sortCardsByPrice("asc");
+          updateCardPrices();
+        }
+      });
+  
+      $("#sf-input-sort-desc").on("change", function () {
+        if (this.checked) {
+          $("#sf-input-sort-asc").prop("checked", false);
+          sortCardsByPrice("desc");
+          updateCardPrices();
+        }
+      });
+    }
+
+  // Event listener for the filter submit button
+  $(".sf-field-submit input").on("click", function (e) {
+    e.preventDefault();
     $("#close-button").click();
   });
 });
