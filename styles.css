@@ -178,6 +178,7 @@ tbody tr:nth-child(even) {
   max-height: 400px;
   overflow: hidden;
   transition: all 200ms ease;
+  height: 100%;
 }
 .card.is-expanded .card__body {
   max-height: none;
@@ -396,7 +397,7 @@ tbody tr:nth-child(even) {
   #wrapper {
     width: 95%;
     margin: 0 auto; /* Center the div horizontally */
-    top: 15%;
+    top: 10%;
     left: 0;
     right: 0; /* Reset left and right for centering */
   }
@@ -407,6 +408,22 @@ tbody tr:nth-child(even) {
     font-size: small;
   }
 }
+
+@media screen and (max-height: 600px) {
+  #wrapper {
+    max-height: 95vh;
+    margin-top: 0;
+    top: 2.5%;
+    overflow: auto !important; /* Add this line to make content scrollable */
+  }
+  
+  ._sf_submit {
+    position: absolute !important; /* Position this element absolutely */
+    bottom: 0 !important; /* Place it at the bottom of the parent "wrapper" */
+  }
+}
+
+
 
 #filter {
   position: relative;
