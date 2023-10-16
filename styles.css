@@ -20,9 +20,8 @@ body {
   color: rgba(0, 0, 0, 0.54);
   justify-content: center;
   font-family: "Work Sans", sans-serif;
-  overflow-x: hidden;
-  display: grid;
-  margin: 0;
+  display: block;
+  margin: 0 auto;
 }
 
 h1,
@@ -110,13 +109,11 @@ tbody tr:nth-child(even) {
 @media screen and (max-width: 600px) {
   .container {
     padding: 15px 0 70px;
-    display: grid;
+    display: flex;
   }
   .card {
-    min-width: 90%;
+    min-width: 95%;
     justify-self: center;
-    margin-left: 50px;
-    margin-right: 50px;
   }
 }
 @media screen and (max-width: 420px) {
@@ -308,10 +305,6 @@ tbody tr:nth-child(even) {
 }
 .by a:hover {
   text-decoration: none;
-}
-
-.price-range-block {
-  margin: 30px;
 }
 .ui-slider-horizontal {
   height: 0.6em;
