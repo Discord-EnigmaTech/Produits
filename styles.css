@@ -767,7 +767,7 @@ body #tab-bar .tab > div span {
 .video-container {
   margin: auto;
   width: 100%;
-  padding: 70px 0;
+  padding: 70px 0 0 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

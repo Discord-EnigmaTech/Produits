@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
       constrictButton.style.display = "none";
       expandButton.style.display = "block";
       showOnlyInvisibleCards();
+      performFilter();
     });
 
     function closeAllCardsExcept(exceptCard) {
@@ -225,6 +226,8 @@ $(document).ready(function () {
       parseFloat($("#max_price").val().replace(/,/g, ".")) || Infinity;
     const searchQuery = $("#search-input").val().toLowerCase();
 
+    const hiddenCards = [];
+
     $(".card").each(function () {
       const card = $(this);
       const cardId = card.attr("id");
@@ -233,7 +236,6 @@ $(document).ready(function () {
       const description = card.find(".card__intro").text().toLowerCase();
       const specs = card.find("#intro").text().toLowerCase();
 
-      // Check if the card matches the filter criteria
       if (
         (checkedFilters.length === 0 || checkedFilters.includes(cardId)) &&
         cardPrice >= minPrice &&
@@ -248,27 +250,30 @@ $(document).ready(function () {
         card.addClass("is-hidden");
         hiddenCards.push(this);
       }
-
-      if (checkedFilters.length === 0) {
-        // No filters are checked, show Default videos
-        $("iframe.Default").css("display", "block");
-      } else {
-        // Hide all videos
-        $("iframe").css("display", "none");
-
-        // Show videos for the selected filters
-        checkedFilters.forEach((filter) => {
-          const classSelector = `iframe.${filter}`;
-          $(classSelector).css("display", "block");
-        });
-      }
     });
+
+    // Hide all videos
+    $("iframe").css("display", "none");
+
+    if (checkedFilters.length === 0) {
+      // No checkboxes are checked, show the "default" video
+      $("iframe.Default").css("display", "block");
+    } else {
+      // Show videos for the selected filters
+      checkedFilters.forEach((filter) => {
+        const classSelector = `iframe.${filter}`;
+        $(classSelector).css("display", "block");
+      });
+    }
 
     console.log(
       `Hidden cards:`,
       hiddenCards.map((card) => card.id)
     );
   }
+
+  // Array to store the checked checkboxes
+  var checkedCheckboxes = [];
 
   // Function to update the filter button state
   function updateSubmitButtonState() {
@@ -280,7 +285,9 @@ $(document).ready(function () {
     var shouldActivateButton =
       searchInput.length > 0 ||
       (!isNaN(min_price) && !isNaN(max_price)) ||
-      allUnchecked;
+      allUnchecked ||
+      checkedCheckboxes.length > 0;
+
     var filterButton = $(".sf-field-submit");
 
     if (shouldActivateButton) {
@@ -291,6 +298,7 @@ $(document).ready(function () {
 
     // Update the slider values if input values are valid
     if (!isNaN(min_price) && !isNaN(max_price)) {
+      filterButton.addClass("submitactive");
       slider.slider("values", [min_price, max_price]);
     }
   }
@@ -404,6 +412,11 @@ $(document).ready(function () {
     performFilter();
   });
 
+  // Event listener for slider changes
+  slider.on("slide", function (event, ui) {
+    updateSubmitButtonState();
+  });
+
   $("#min_price, #max_price").on("input", function () {
     updateSubmitButtonState();
     performFilter();
@@ -420,23 +433,20 @@ $(document).ready(function () {
   });
 
   $(".sf-input-checkbox").on("change", function () {
-    // Check if all checkboxes are unchecked
-    if ($(".sf-input-checkbox:checked").length === 0) {
-      // Reset the hiddenCards array
-      hiddenCards = [];
-      performFilter();
+    updateSubmitButtonState();
+    if (this.checked) {
+      checkedCheckboxes.push(this.value);
     } else {
-      performFilter();
+      checkedCheckboxes = checkedCheckboxes.filter(
+        (item) => item !== this.value
+      );
     }
-  });
 
-  $("#min_price, #max_price").on("change", function () {
-    updateSubmitButtonState();
-    performFilter();
-  });
+    if ($(".sf-input-checkbox:checked").length === 0) {
+      hiddenCards = [];
+      $(".sf-field-submit").removeClass("submitactive");
+    }
 
-  $("#min_price, #max_price").on("paste keyup", function () {
-    updateSubmitButtonState();
     performFilter();
   });
 
@@ -448,6 +458,16 @@ $(document).ready(function () {
         return $(this).val();
       })
       .get();
+    performFilter();
+  });
+
+  $("#min_price, #max_price").on("change", function () {
+    updateSubmitButtonState();
+    performFilter();
+  });
+
+  $("#min_price, #max_price").on("paste keyup", function () {
+    updateSubmitButtonState();
     performFilter();
   });
 
@@ -474,6 +494,9 @@ $(document).ready(function () {
   $(".sf-field-submit input").on("click", function (e) {
     e.preventDefault();
     $("#close-button").click();
+    // If the button is clicked, disable it for good
+    $(".sf-field-submit").removeClass("submitactive");
+    checkedCheckboxes = []; // Clear the checked checkboxes array
   });
 });
 
