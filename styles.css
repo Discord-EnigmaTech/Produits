@@ -173,6 +173,10 @@ tbody tr:nth-child(even) {
   object-fit: cover;
   cursor: pointer;
 }
+.card.is-expanded .card__here {
+  cursor: default !important;
+}
+
 .card__body {
   padding: 1.5rem;
   background: white;

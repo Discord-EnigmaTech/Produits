@@ -54,8 +54,9 @@ $("#tab-bar .tab")
     }
   });
 
-let invisibleCards = [];
+let hiddenCards = [];
 let appliedFilters = [];
+let invisibleCards = [];
 
 /* Product Cards */
 document.addEventListener("DOMContentLoaded", function () {
