@@ -248,6 +248,20 @@ $(document).ready(function () {
         card.addClass("is-hidden");
         hiddenCards.push(this);
       }
+
+      if (checkedFilters.length === 0) {
+        // No filters are checked, show Default videos
+        $("iframe.Default").css("display", "block");
+      } else {
+        // Hide all videos
+        $("iframe").css("display", "none");
+
+        // Show videos for the selected filters
+        checkedFilters.forEach((filter) => {
+          const classSelector = `iframe.${filter}`;
+          $(classSelector).css("display", "block");
+        });
+      }
     });
 
     console.log(
@@ -461,4 +475,9 @@ $(document).ready(function () {
     e.preventDefault();
     $("#close-button").click();
   });
+});
+
+$(document).ready(function () {
+  // Hide all iframes except those with class "Default"
+  $("iframe:not(.Default)").css("display", "none");
 });
