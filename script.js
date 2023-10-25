@@ -54,18 +54,17 @@ $("#tab-bar .tab")
     }
   });
 
-let hiddenCards = [];
+let invisibleCards = [];
 let appliedFilters = [];
 
 /* Product Cards */
 document.addEventListener("DOMContentLoaded", function () {
-  let invisibleCards = []; // Array to store the newly hidden cards
-
   const cards = document.querySelectorAll(".card");
   cards.forEach(function (card) {
     const expandButton = card.querySelector(".card__expand");
     const constrictButton = card.querySelector(".card__constrict");
     const closeButton = card.querySelector(".card__close");
+    const hero = card.querySelector(".card__hero"); // Add this line
 
     expandButton.addEventListener("click", function () {
       closeAllCardsExcept(card);
@@ -89,6 +88,16 @@ document.addEventListener("DOMContentLoaded", function () {
       expandButton.style.display = "block";
       showOnlyInvisibleCards();
       performFilter();
+    });
+
+    hero.addEventListener("click", function () {
+      // Add this event listener
+      closeAllCardsExcept(card);
+      if (!card.classList.contains("is-expanded")) {
+        card.classList.add("is-expanded");
+        expandButton.style.display = "none";
+        constrictButton.style.display = "block";
+      }
     });
 
     function closeAllCardsExcept(exceptCard) {
@@ -115,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
           invisibleCard.classList.remove("is-hidden");
         }
       });
-      invisibleCards = []; // Clear the array after showing the cards
+      invisibleCards = [];
     }
   });
 });
