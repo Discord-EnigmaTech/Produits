@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const expandButton = card.querySelector(".card__expand");
     const constrictButton = card.querySelector(".card__constrict");
     const closeButton = card.querySelector(".card__close");
-    const hero = card.querySelector(".card__hero"); // Add this line
+    const hero = card.querySelector(".card__hero");
 
     expandButton.addEventListener("click", function () {
       closeAllCardsExcept(card);
