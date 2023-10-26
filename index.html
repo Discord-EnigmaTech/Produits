@@ -4,24 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"
-      type="text/css"
-      media="all"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      type="text/css"
-      media="all"
-    />
     <title>Les Produits conseillés</title>
     <meta
       name="description"
       content="Les meilleurs produits (composants pc et périphériques) que l'équipe Enigmatech conseille."
     />
-
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -30,10 +17,6 @@
     <meta name="msapplication-TileColor" content="#2d89ef" />
     <meta name="theme-color" content="#000000" />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <div class="price-range-block">
@@ -362,115 +345,376 @@
     <div class="overlay"></div>
 
     <div class="video-container">
-      <iframe
-        class="Default"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/fRn2qgZ4rqc?si=Ef7nhcKMgnprDqF7"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
 
-      <iframe
-        class="CPU"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/UL-Zrtk7ChU?si=WB_TQc8o123IlBG-"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/fRn2qgZ4rqc?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/fRn2qgZ4rqc.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="Default"
+    ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/UL-Zrtk7ChU?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/UL-Zrtk7ChU.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="CPU"
+    ></iframe>
 
-      <iframe
-        class="RAM"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/ZTNgt9vdkBY?si=cIXPpMDLLN5qMhN6"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/ZTNgt9vdkBY?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/ZTNgt9vdkBY.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="RAM"
+    ></iframe>
 
-      <iframe
-        class="Stockage"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/UGXKKVfd5BI?si=mGoKhIy3KIm4hUSQ"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/UGXKKVfd5BI?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/UGXKKVfd5BI.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="Stockage"
+    ></iframe>
 
-      <iframe
-        class="Ventirad"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/0WwLVZUDdpU?si=0MBpYt4oUWNKd85K"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/0WwLVZUDdpU?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/0WwLVZUDdpU.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="Ventirad"
+    ></iframe>
 
-      <iframe
-        class="Ventirad"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/jkanRGGm9_I?si=sEiZsBQxv5sAKEOF"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/jkanRGGm9_I?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/jkanRGGm9_I.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="Ventirad"
+    ></iframe>
 
-      <iframe
-        class="Carte_Mère"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/mXER89mNxTw?si=NW-iSUPnoVxfpiU1"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/mXER89mNxTw?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/mXER89mNxTw.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="Carte_Mère"
+    ></iframe>
 
-      <iframe
-        class="GPU"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/RgegBrkL4c0?si=_cfeKq0_rABWH1Fj"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/RgegBrkL4c0?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/RgegBrkL4c0.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="GPU"
+    ></iframe>
 
-      <iframe
-        class="Stockage"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/yMcvuWC5SO4?si=CItN-hIVVxLsc3s8"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/yMcvuWC5SO4?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/yMcvuWC5SO4.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="Stockage"
+    ></iframe>
 
-      <iframe
-        class="Alim"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/MMeRS6Rrmi8?si=kt9DDVmx_z2cRYGF"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <iframe
+    srcdoc="
+        <style>
+            body, .full {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                object-fit: cover;
+            }
+        </style>
+        <a
+            href='https://www.youtube.com/embed/MMeRS6Rrmi8?autoplay=1'
+            class='full'
+        >
+            <img
+                src='https://vumbnail.com/MMeRS6Rrmi8.jpg'
+                class='full'
+            />
+            <svg
+                version='1.1'
+                viewBox='0 0 68 48'
+                width='68px'
+                style='position: relative;'
+            >
+                <path d='M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z' fill='#f00'></path>
+                <path d='M 45,24 27,14 27,34' fill='#fff'></path>
+            </svg>
+        </a>
+    "
+    style="max-width: 640px; width: 100%; aspect-ratio: 16/9;"
+    frameborder="0"
+    class="Alim"
+    ></iframe>
+
     </div>
 
     <div class="container">
@@ -2135,8 +2379,24 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-    <script src="script.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"
+      type="text/css"
+      media="all"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      type="text/css"
+      media="all"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
   </body>
 </html>

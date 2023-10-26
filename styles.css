@@ -84,7 +84,7 @@ tbody tr:nth-child(even) {
   left: -100px;
   right: -100px;
   bottom: 0;
-  background: url("bg.jpg") no-repeat;
+  background: url("bg.webp") no-repeat;
   background-size: cover;
   transform: rotate(-8deg) translateY(-65%);
   z-index: -100;
