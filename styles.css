@@ -96,6 +96,34 @@ tbody tr:nth-child(even) {
   }
 }
 
+.amazon {
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  padding: 50px 0;
+  background-color: #7895cb6e;
+}
+
+.amazon a {
+  font-size: 150%;
+  padding: 0 100px;
+  display: grid;
+  text-decoration: none;
+  margin: 0 auto;
+  justify-content: center;
+  color: #5672a7;
+}
+
+.no {
+  width: 25%;
+  margin: 50px auto;
+  border-radius: 25px;
+  font-size: 200%;
+  background-color: #7895cb;
+  text-align: center;
+  display: none;
+}
+
 .container {
   margin: auto;
   width: 100%;

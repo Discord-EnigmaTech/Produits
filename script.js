@@ -237,6 +237,7 @@ $(document).ready(function () {
     const searchQuery = $("#search-input").val().toLowerCase();
 
     const hiddenCards = [];
+    let hiddenCardCount = 0; // New variable to count hidden cards
 
     $(".card").each(function () {
       const card = $(this);
@@ -259,6 +260,7 @@ $(document).ready(function () {
       } else {
         card.addClass("is-hidden");
         hiddenCards.push(this);
+        hiddenCardCount++; // Increment hidden card count
       }
     });
 
@@ -274,6 +276,13 @@ $(document).ready(function () {
         const classSelector = `iframe.${filter}`;
         $(classSelector).css("display", "block");
       });
+    }
+
+    // Check if all cards are hidden and show the ".no" div if so
+    if (hiddenCardCount === $(".card").length) {
+      $(".no").show();
+    } else {
+      $(".no").hide();
     }
 
     console.log(
