@@ -814,3 +814,7 @@ body #tab-bar .tab > div span {
   margin: 10px 10px 10px 10px;
   border-radius: 5%;
 }
+
+.pc {
+  display: block !important;
+}
