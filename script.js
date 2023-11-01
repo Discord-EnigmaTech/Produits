@@ -236,59 +236,46 @@ $(document).ready(function () {
       parseFloat($("#max_price").val().replace(/,/g, ".")) || Infinity;
     const searchQuery = $("#search-input").val().toLowerCase();
 
-    const hiddenCards = [];
-    let hiddenCardCount = 0; // New variable to count hidden cards
-
     $(".card").each(function () {
       const card = $(this);
-      const cardId = card.attr("id");
-      const cardPrice = parseFloat(card.data("price")) || 0;
-      const title = card.find(".card__title").text().toLowerCase();
-      const description = card.find(".card__intro").text().toLowerCase();
-      const specs = card.find("#intro").text().toLowerCase();
+      const cardId = card.attr("id").split(" ")[0]; // Extract the component ID from the card ID
 
-      if (
-        (checkedFilters.length === 0 || checkedFilters.includes(cardId)) &&
-        cardPrice >= minPrice &&
-        cardPrice <= maxPrice &&
-        (searchQuery === "" ||
-          title.includes(searchQuery) ||
-          description.includes(searchQuery) ||
-          specs.includes(searchQuery))
-      ) {
-        card.removeClass("is-hidden");
+      const cardPrice =
+        parseFloat(card.find(".card__desc").text().split("\n")[0]) || 0; // Extract the price from the card content
+      const cardTitle = card.find(".card__title").text().toLowerCase();
+
+      const isComponentIncluded =
+        checkedFilters.length === 0 || checkedFilters.includes(cardId);
+      const isPriceInRange = cardPrice >= minPrice && cardPrice <= maxPrice;
+      const isSearchMatched = cardTitle.includes(searchQuery);
+
+      if (isComponentIncluded && isPriceInRange && isSearchMatched) {
+        card.show();
       } else {
-        card.addClass("is-hidden");
-        hiddenCards.push(this);
-        hiddenCardCount++; // Increment hidden card count
+        card.hide();
       }
     });
 
-    // Hide all videos
-    $("iframe").css("display", "none");
-
+    // Update the video display
     if (checkedFilters.length === 0) {
-      // No checkboxes are checked, show the "default" video
-      $("iframe.Default").css("display", "block");
+      showDefaultVideo();
     } else {
-      // Show videos for the selected filters
-      checkedFilters.forEach((filter) => {
-        const classSelector = `iframe.${filter}`;
-        $(classSelector).css("display", "block");
-      });
+      showSelectedVideos(checkedFilters);
     }
+  }
 
-    // Check if all cards are hidden and show the ".no" div if so
-    if (hiddenCardCount === $(".card").length) {
-      $(".no").show();
-    } else {
-      $(".no").hide();
-    }
+  // Function to show the "Default" video
+  function showDefaultVideo() {
+    $("iframe").hide(); // Hide all videos
+    $("iframe.Default").show();
+  }
 
-    console.log(
-      `Hidden cards:`,
-      hiddenCards.map((card) => card.id)
-    );
+  // Function to show videos for selected filters
+  function showSelectedVideos(selectedFilters) {
+    $("iframe").hide(); // Hide all videos
+    selectedFilters.forEach((filter) => {
+      $(`iframe.${filter}`).show();
+    });
   }
 
   // Array to store the checked checkboxes
