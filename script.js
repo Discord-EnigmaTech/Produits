@@ -223,6 +223,9 @@ $(document).ready(function () {
 
   /* Filter System */
 
+  // Define hiddenCardCount as a global variable
+  let hiddenCardCount = 0;
+
   // Function to handle filtering based on card ID, price, and search
   function performFilter() {
     const checkedFilters = $(".sf-input-checkbox:checked")
@@ -235,6 +238,8 @@ $(document).ready(function () {
     const maxPrice =
       parseFloat($("#max_price").val().replace(/,/g, ".")) || Infinity;
     const searchQuery = $("#search-input").val().toLowerCase();
+
+    hiddenCardCount = 0; // Reset hiddenCardCount
 
     $(".card").each(function () {
       const card = $(this);
@@ -253,6 +258,7 @@ $(document).ready(function () {
         card.show();
       } else {
         card.hide();
+        hiddenCardCount++; // Increment hiddenCardCount
       }
     });
 
@@ -262,6 +268,18 @@ $(document).ready(function () {
     } else {
       showSelectedVideos(checkedFilters);
     }
+
+    // Check if all cards are hidden and show the ".no" div if so
+    if (hiddenCardCount === $(".card").length) {
+      $(".no").css("display", "block"); // Show the "No result" message
+    } else {
+      $(".no").css("display", "none"); // Hide the "No result" message if there are visible cards
+    }
+
+    console.log(
+      `Hidden cards:`,
+      hiddenCards.map((card) => card.id)
+    );
   }
 
   // Function to show the "Default" video
