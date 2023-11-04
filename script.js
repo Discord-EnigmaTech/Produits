@@ -161,37 +161,14 @@ $(document).ready(function () {
 
   /* Price sorting radio buttons */
 
-  // Function to update the cards' data-price attribute
-  function updateCardPrices() {
-    $(".card").each(function (index) {
-      var card = $(this);
-      var classList = card.attr("class").split(" ");
-
-      // Find the class that contains the price information with non-breaking space as separator
-      var priceClass = classList.find(function (className) {
-        return /^[\d ]+,\d{2}$/.test(className); // Check for a pattern like "1 331,66"
-      });
-
-      var price;
-      if (priceClass) {
-        var priceString = priceClass.replace(/[^\d ,]/g, ""); // Extract digits, non-breaking spaces, and commas
-        price = parseFloat(priceString.replace(" ", "").replace(",", ".")); // Replace non-breaking space with a regular space and comma with a dot for parsing
-      } else {
-        price = 0; // Default price for cards without a valid price
-      }
-
-      card.data("price", price);
-    });
-  }
-
   // Function to sort cards by price (ascending or descending)
   function sortCardsByPrice(order) {
     var cards = $(".card").toArray();
 
-    // Sort the cards based on price
+    // Sort the cards based on their price values
     cards.sort(function (a, b) {
-      var priceA = parseFloat($(a).data("price")) * 100;
-      var priceB = parseFloat($(b).data("price")) * 100;
+      var priceA = extractPriceFromCard(a);
+      var priceB = extractPriceFromCard(b);
 
       if (order === "asc") {
         return priceA - priceB;
@@ -200,10 +177,24 @@ $(document).ready(function () {
       }
     });
 
-    $(".container").empty();
-    cards.forEach(function (card, index) {
-      $(".container").append(card);
-    });
+    // Append sorted cards to the container
+    $(".container").empty().append(cards);
+
+    updateSubmitButtonState();
+  }
+
+  // Function to extract the price from a card
+  function extractPriceFromCard(card) {
+    var cardId = $(card).attr("id");
+    var priceMatch = cardId.match(/([\d ]+,\d{2})/); // Extract the price value
+
+    if (priceMatch && priceMatch.length > 1) {
+      var priceString = priceMatch[1].replace(/[^\d ,]/g, ""); // Remove unwanted characters
+      var price = parseFloat(priceString.replace(" ", "").replace(",", ".")); // Convert to a numeric value
+      return isNaN(price) ? 0 : price;
+    } else {
+      return 0; // Default value for cards without a valid price
+    }
   }
 
   // Function to set up sorting event listeners
@@ -219,12 +210,8 @@ $(document).ready(function () {
 
   // Call the setupSortingEventListeners and updateCardPrices functions initially
   setupSortingEventListeners();
-  updateCardPrices();
 
   /* Filter System */
-
-  // Define hiddenCardCount as a global variable
-  let hiddenCardCount = 0;
 
   // Function to handle filtering based on card ID, price, and search
   function performFilter() {
@@ -239,22 +226,36 @@ $(document).ready(function () {
       parseFloat($("#max_price").val().replace(/,/g, ".")) || Infinity;
     const searchQuery = $("#search-input").val().toLowerCase();
 
-    hiddenCardCount = 0; // Reset hiddenCardCount
+    hiddenCardCount = 0;
 
     $(".card").each(function () {
       const card = $(this);
-      const cardId = card.attr("id").split(" ")[0]; // Extract the component ID from the card ID
-
-      const cardPrice =
-        parseFloat(card.find(".card__desc").text().split("\n")[0]) || 0; // Extract the price from the card content
+      const cardId = card.attr("id").split(" ")[0];
       const cardTitle = card.find(".card__title").text().toLowerCase();
 
+      // card price :
+      const cardDescText = card.find(".card__desc").text();
+      const priceMatches = cardDescText.match(/([\d.,]+)€/);
+      let cardPrice = 0; // Default value if no price is found
+      if (priceMatches && priceMatches.length > 1) {
+        const extractedPrice = priceMatches[1].replace(/,/g, ".");
+        cardPrice = parseFloat(extractedPrice) || 0;
+      }
+
+      const isEcranFilter = checkedFilters.includes("Ecran");
       const isComponentIncluded =
         checkedFilters.length === 0 || checkedFilters.includes(cardId);
       const isPriceInRange = cardPrice >= minPrice && cardPrice <= maxPrice;
       const isSearchMatched = cardTitle.includes(searchQuery);
 
-      if (isComponentIncluded && isPriceInRange && isSearchMatched) {
+      if (isEcranFilter) {
+        if (cardId === "Ecran" && isPriceInRange && isSearchMatched) {
+          card.show();
+        } else {
+          card.hide();
+          hiddenCardCount++; // Increment hiddenCardCount
+        }
+      } else if (isComponentIncluded && isPriceInRange && isSearchMatched) {
         card.show();
       } else {
         card.hide();
@@ -278,7 +279,11 @@ $(document).ready(function () {
 
     console.log(
       `Hidden cards:`,
-      hiddenCards.map((card) => card.id)
+      $(".card:hidden")
+        .map(function () {
+          return this.id;
+        })
+        .get()
     );
   }
 
@@ -304,13 +309,13 @@ $(document).ready(function () {
     var min_price = parseInt($("#min_price").val());
     var max_price = parseInt($("#max_price").val());
     var searchInput = $("#search-input").val().trim();
-    var allUnchecked = $(".sf-input-checkbox:checked").length === 0;
+    var priceCheckboxes = $(".sf-label-checkbox");
 
     var shouldActivateButton =
       searchInput.length > 0 ||
       (!isNaN(min_price) && !isNaN(max_price)) ||
-      allUnchecked ||
-      checkedCheckboxes.length > 0;
+      checkedCheckboxes.length > 0 ||
+      priceCheckboxes.length > 0; // Update to check if there are any price checkboxes
 
     var filterButton = $(".sf-field-submit");
 
@@ -326,6 +331,23 @@ $(document).ready(function () {
       slider.slider("values", [min_price, max_price]);
     }
   }
+
+  // Function to set up event listeners for checkboxes
+  function setupCheckboxEventListeners() {
+    $(".sf-input-checkbox").change(function () {
+      if (this.checked) {
+        checkedCheckboxes.push(this.value);
+      } else {
+        checkedCheckboxes = checkedCheckboxes.filter(
+          (checkbox) => checkbox !== this.value
+        );
+      }
+      updateSubmitButtonState();
+    });
+  }
+
+  // Call setupCheckboxEventListeners initially
+  setupCheckboxEventListeners();
 
   /* Filter Menu */
 
@@ -355,7 +377,7 @@ $(document).ready(function () {
           $(".sf-field-submit").removeClass("submitactive");
         }
         var parent = $(e.target).closest(
-          "li.sf-field-taxonomy-geschlecht,li.sf-field-taxonomy-anlass"
+          "li.sf-field-composant,li.sf-field-peripherique"
         );
         if ($(e.target).prop("checked")) {
           parent.addClass("filter-selected");
@@ -387,7 +409,7 @@ $(document).ready(function () {
     }
     // Add or remove a class to style the selected filters
     var $parentLi = $(this).closest(
-      "li.sf-field-taxonomy-geschlecht,li.sf-field-taxonomy-anlass"
+      "li.sf-field-composant,li.sf-field-peripherique"
     );
     if ($(this).prop("checked")) {
       $parentLi.addClass("filter-selected");
@@ -450,7 +472,7 @@ $(document).ready(function () {
     containerPrice.toggleClass(
       "filter-opened",
       $(this)
-        .closest(".sf-field-taxonomy-geschlecht, .sf-field-taxonomy-anlass")
+        .closest(".sf-field-composant, .sf-field-peripherique")
         .hasClass("active")
     );
     performFilter();
