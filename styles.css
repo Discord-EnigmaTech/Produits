@@ -124,6 +124,27 @@ tbody tr:nth-child(even) {
   display: none;
 }
 
+@media screen and (max-width: 768px) {
+  .no {
+    width: 75%;
+    padding: 0 10px 0 10px;
+  }
+  .amazon {
+    background-color: #7895cb;
+  }
+
+  .amazon a {
+    color: #1e355f;
+    font-size: 125%;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .no {
+    font-size: 125%;
+  }
+}
+
 .container {
   margin: auto;
   width: 100%;
@@ -192,7 +213,7 @@ tbody tr:nth-child(even) {
   font-size: 24px;
 }
 .card.is-expanded p.card__intro {
-  font-size: 27.5px;
+  font-size: 22.5px;
 }
 .card__hero {
   display: block;
