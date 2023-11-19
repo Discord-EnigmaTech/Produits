@@ -47,6 +47,7 @@ $("#tab-bar .tab")
               // Apply blur to everything except the #wrapper and its children
               $("body *:not(#wrapper, #wrapper *)").css("filter", "blur(5px)");
             } else if ($this.index() === 2) {
+              window.history.pushState({}, "", window.location.pathname);
               location.reload();
             }
           }
@@ -211,6 +212,65 @@ $(document).ready(function () {
   // Call the setupSortingEventListeners and updateCardPrices functions initially
   setupSortingEventListeners();
 
+  // Function to parse URL parameters and set the state on page load
+  function parseUrlParams() {
+    console.log("Parsing URL parameters...");
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Set search query
+    const searchQuery = urlParams.get("recherche");
+    if (searchQuery) {
+      $("#search-input").val(searchQuery);
+    }
+
+    // Set sort order
+    const sortOrder = urlParams.get("ordre");
+    if (sortOrder) {
+      $(`.sf-input-checkbox-price[data-sort-order="${sortOrder}"]`).prop(
+        "checked",
+        true
+      );
+    }
+
+    // Set checked filters
+    const filters = urlParams.get("filtre");
+    if (filters) {
+      const filterArray = filters.split(",");
+      console.log("Selected filters from URL:", filterArray);
+      filterArray.forEach((filter) => {
+        $(`.sf-input-checkbox[value="${filter}"]`).prop("checked", true);
+      });
+
+      // Show videos based on selected filters without immediate update
+      showSelectedVideos(filterArray, false);
+
+      // Update the videos after a short delay to ensure they are shown
+      setTimeout(() => {
+        showSelectedVideos(filterArray);
+        console.log("Videos updated based on selected filters after delay.");
+      }, 500);
+    } else {
+      console.log("No filters selected from URL.");
+    }
+
+    // Set price range
+    const priceRange = urlParams.get("prix");
+    if (priceRange) {
+      const [minPrice, maxPrice] = priceRange
+        .match(/prix([\d.]+)€-([\d.]+)€/)
+        .slice(1, 3)
+        .map(Number);
+      $("#min_price").val(minPrice);
+      $("#max_price").val(maxPrice);
+      console.log("Price range from URL:", minPrice, maxPrice);
+    } else {
+      console.log("No price range selected from URL.");
+    }
+
+    console.log("URL parameters parsed successfully.");
+  }
+
   /* Filter System */
 
   // Function to handle filtering based on card ID, price, and search
@@ -277,15 +337,74 @@ $(document).ready(function () {
       $(".no").css("display", "none"); // Hide the "No result" message if there are visible cards
     }
 
-    console.log(
-      `Hidden cards:`,
-      $(".card:hidden")
-        .map(function () {
-          return this.id;
-        })
-        .get()
-    );
+    // After filtering, update the URL
+    updateUrl();
   }
+
+  // Function to update the URL based on filters, search, and other parameters
+  function updateUrl() {
+    const checkedFilters = $(".sf-input-checkbox:checked")
+      .map(function () {
+        return this.value;
+      })
+      .get();
+
+    const minPrice = $("#min_price").val();
+    const maxPrice = $("#max_price").val();
+    const searchQuery = $("#search-input").val();
+    const sortOrder = $(".sf-input-checkbox-price:checked").data("sort-order");
+
+    // Check if no filters are selected, and clear the URL parameters
+    if (
+      checkedFilters.length === 0 &&
+      !minPrice &&
+      !maxPrice &&
+      !searchQuery &&
+      !sortOrder
+    ) {
+      window.history.pushState({}, "", window.location.pathname);
+      return;
+    }
+
+    // Create URL parameters
+    const params = new URLSearchParams();
+
+    if (checkedFilters.length > 0) {
+      params.set("filtre", checkedFilters.join(","));
+    }
+
+    if (minPrice !== "" && maxPrice !== "") {
+      params.set("prix", `prix${minPrice}€-${maxPrice}€`);
+    }
+
+    if (searchQuery) {
+      params.set("recherche", searchQuery);
+    }
+
+    if (sortOrder) {
+      params.set("ordre", sortOrder);
+    }
+
+    // Get the new URL with parameters
+    const newUrl =
+      window.location.pathname +
+      (params.toString() ? "?" + params.toString() : "");
+
+    // Update the URL without triggering a page reload
+    window.history.pushState({ path: newUrl }, "", newUrl);
+  }
+
+  // Parse URL parameters and set initial state on page load
+  parseUrlParams();
+
+  // Attach event listener to the filter form submission to handle URL updates
+  $("#filter form").on("submit", function (event) {
+    event.preventDefault();
+    performFilter();
+  });
+
+  // Call performFilter to apply the filters after initial setup
+  performFilter();
 
   // Function to show the "Default" video
   function showDefaultVideo() {
@@ -294,11 +413,17 @@ $(document).ready(function () {
   }
 
   // Function to show videos for selected filters
-  function showSelectedVideos(selectedFilters) {
+  function showSelectedVideos(selectedFilters, updateImmediately = true) {
     $("iframe").hide(); // Hide all videos
     selectedFilters.forEach((filter) => {
       $(`iframe.${filter}`).show();
     });
+
+    // If updateImmediately is true, trigger any additional actions
+    if (updateImmediately) {
+      // Add any additional actions here
+      console.log("Videos updated immediately based on selected filters.");
+    }
   }
 
   // Array to store the checked checkboxes
@@ -523,7 +648,6 @@ $(document).ready(function () {
       if (this.checked) {
         $("#sf-input-sort-desc").prop("checked", false);
         sortCardsByPrice("asc");
-        updateCardPrices();
       }
     });
 
@@ -531,7 +655,6 @@ $(document).ready(function () {
       if (this.checked) {
         $("#sf-input-sort-asc").prop("checked", false);
         sortCardsByPrice("desc");
-        updateCardPrices();
       }
     });
   }
@@ -544,9 +667,4 @@ $(document).ready(function () {
     $(".sf-field-submit").removeClass("submitactive");
     checkedCheckboxes = []; // Clear the checked checkboxes array
   });
-});
-
-$(document).ready(function () {
-  // Hide all iframes except those with class "Default"
-  $("iframe:not(.Default)").css("display", "none");
 });

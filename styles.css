@@ -216,16 +216,19 @@ tbody tr:nth-child(even) {
   font-size: 22.5px;
 }
 .card__hero {
+  position: relative;
   display: block;
   width: 100%;
   height: 400px;
+  margin: auto;
   object-fit: cover;
   cursor: pointer;
+  overflow: hidden;
+  border: 10px solid white;
 }
-.card.is-expanded .card__here {
+.card.is-expanded .card__hero {
   cursor: default !important;
 }
-
 .card__body {
   padding: 1.5rem;
   background: white;
