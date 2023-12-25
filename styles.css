@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Work+Sans:400,700");
+
+:root {
+  --lighter-primary: #7895cb4d;
+  --light-primary: #7895cb;
+  --primary: #5672a7;
+  --dark-primary: #1e355f;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -16,7 +24,7 @@ body {
 }
 
 body {
-  background: rgba(120, 149, 203, 0.3);
+  background: var(--lighter-primary);
   color: rgba(0, 0, 0, 0.54);
   justify-content: center;
   font-family: "Work Sans", sans-serif;
@@ -84,9 +92,11 @@ tbody tr:nth-child(even) {
   left: -100px;
   right: -100px;
   bottom: 0;
-  background: url("bg.webp") no-repeat;
+  /*background: url("bg.webp") no-repeat;*/
+  background: url("https://i0.wp.com/backgroundabstract.com/wp-content/uploads/edd/2022/12/531-01-e1671189813139.jpg?resize=150150&ssl=1")
+    no-repeat;
   background-size: cover;
-  transform: rotate(-8deg) translateY(-65%);
+  transform: rotate(-8deg) translateY(-65%) scaleX(-1);
   z-index: -100;
   overflow: hidden;
 }
@@ -101,7 +111,7 @@ tbody tr:nth-child(even) {
   margin: 0 auto;
   justify-content: center;
   padding: 50px 0;
-  background-color: #7895cb6e;
+  background-color: var(--light-primary) 6e;
 }
 
 .amazon a {
@@ -111,7 +121,7 @@ tbody tr:nth-child(even) {
   text-decoration: none;
   margin: 0 auto;
   justify-content: center;
-  color: #5672a7;
+  color: var(--primary);
 }
 
 .no {
@@ -119,7 +129,7 @@ tbody tr:nth-child(even) {
   margin: 50px auto;
   border-radius: 25px;
   font-size: 200%;
-  background-color: #7895cb;
+  background-color: var(--light-primary);
   text-align: center;
   display: none;
 }
@@ -130,11 +140,11 @@ tbody tr:nth-child(even) {
     padding: 0 10px 0 10px;
   }
   .amazon {
-    background-color: #7895cb;
+    background-color: var(--light-primary);
   }
 
   .amazon a {
-    color: #1e355f;
+    color: var(--dark-primary);
     font-size: 125%;
   }
 }
@@ -266,7 +276,7 @@ tbody tr:nth-child(even) {
   justify-content: space-between;
 }
 .card__desc {
-  color: #7895cb;
+  color: var(--light-primary);
   font-size: 125%;
 }
 .card__expand {
@@ -300,7 +310,7 @@ tbody tr:nth-child(even) {
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  color: #7895cb;
+  color: var(--light-primary);
   transition: all 200ms ease;
 }
 .card__constrict {
@@ -310,7 +320,7 @@ tbody tr:nth-child(even) {
   color: white;
   text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
   display: none;
-  background: #7895cb;
+  background: var(--light-primary);
   text-align: center;
 }
 .card__constrict:hover {
@@ -326,7 +336,7 @@ tbody tr:nth-child(even) {
   height: 50px;
   border-radius: 50%;
   line-height: 50px;
-  background: #7895cb;
+  background: var(--light-primary);
   text-align: center;
   cursor: pointer;
   transform: scale(1);
@@ -580,7 +590,7 @@ tbody tr:nth-child(even) {
 }
 
 #filter > form > ul > li.active h4 {
-  color: #7895cb;
+  color: var(--light-primary);
 }
 
 #filter > form > ul > li > ul > li {
@@ -607,7 +617,7 @@ tbody tr:nth-child(even) {
 }
 
 #filter > form > ul > li > ul > li.active {
-  color: #7895cb;
+  color: var(--light-primary);
 }
 
 #filter > form > ul > li > ul > li input {
@@ -647,7 +657,7 @@ tbody tr:nth-child(even) {
 }
 
 #filter > form > ul > li > ul > li.active label:before {
-  background-color: #7895cb;
+  background-color: var(--light-primary);
   color: #fff;
 }
 
@@ -666,7 +676,7 @@ input[type="submit"] {
 }
 
 .sf-field-submit.submitactive input[type="submit"] {
-  background-color: #7895cb;
+  background-color: var(--light-primary);
   cursor: pointer;
   z-index: 50;
 }
@@ -685,23 +695,22 @@ li.sf-field-submit:after {
   cursor: not-allowed;
 }
 
-/* Style for checked checkboxes */
 .sf-input-checkbox:checked + label {
-  font-weight: bold !important; /* Example: Make the label bold when the checkbox is checked */
+  font-weight: bold !important;
 }
 .sf-input-checkbox:checked + label:before {
-  border: 2px solid #7895cb; /* Border color for checked checkboxes */
-  background-color: #7895cb; /* Background color for checked checkboxes */
-  color: white; /* Show the check mark in white */
+  border: 2px solid var(--light-primary);
+  background-color: var(--light-primary);
+  color: white;
 }
 
 .sf-input-checkbox-price:checked + label {
-  font-weight: bold !important; /* Example: Make the label bold when the checkbox is checked */
+  font-weight: bold !important;
 }
 .sf-input-checkbox-price:checked + label:before {
-  border: 2px solid #7895cb; /* Border color for checked checkboxes */
-  background-color: #7895cb; /* Background color for checked checkboxes */
-  color: white; /* Show the check mark in white */
+  border: 2px solid var(--light-primary);
+  background-color: var(--light-primary);
+  color: white;
 }
 
 body #tab-bar {
@@ -730,22 +739,22 @@ body #tab-bar .tab {
 
 body #tab-bar .tab.active div:first-child {
   background-color: #ffffff;
-  color: #333333; /* Change stroke and fill to color for Font Awesome icons */
+  color: #333333;
 }
 
 body #tab-bar .tab.active div:last-child {
   background-color: #333333;
-  color: #ffffff; /* Change stroke and fill to color for Font Awesome icons */
+  color: #ffffff;
 }
 
 body #tab-bar .tab:not(.active) div:first-child {
   background-color: #333333;
-  color: #ffffff; /* Change stroke and fill to color for Font Awesome icons */
+  color: #ffffff;
 }
 
 body #tab-bar .tab:not(.active) div:last-child {
   background-color: #ffffff;
-  color: #333333; /* Change stroke and fill to color for Font Awesome icons */
+  color: #333333;
 }
 
 body #tab-bar .tab > div {
@@ -763,7 +772,7 @@ body #tab-bar .tab > div i {
 }
 
 body #tab-bar .tab > div span {
-  margin-top: 5px; /* Add spacing between icon and text */
+  margin-top: 5px;
 }
 
 /*------------------------------*/
@@ -775,8 +784,8 @@ body #tab-bar .tab > div span {
   left: 0;
   right: 0;
   margin: 0 auto;
-  display: block; /* Ensure it's treated as a block-level element */
-  text-align: center; /* Center the content inside the container */
+  display: block;
+  text-align: center;
 }
 
 /* Styles for the round button */
@@ -784,7 +793,7 @@ body #tab-bar .tab > div span {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #7895cb;
+  background-color: var(--light-primary);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -816,7 +825,7 @@ body #tab-bar .tab > div span {
 
 /* Hover effect for the button */
 #close-button:hover {
-  background-color: #5672a7;
+  background-color: var(--primary);
 }
 
 /* Video player */
