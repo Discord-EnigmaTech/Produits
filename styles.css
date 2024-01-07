@@ -92,13 +92,13 @@ tbody tr:nth-child(even) {
   left: -100px;
   right: -100px;
   bottom: 0;
-  /*background: url("bg.webp") no-repeat;*/
-  background: url("https://i0.wp.com/backgroundabstract.com/wp-content/uploads/edd/2022/12/531-01-e1671189813139.jpg?resize=150150&ssl=1")
-    no-repeat;
+  background: url("bg.webp") no-repeat;
+  /*background: url("https://i0.wp.com/backgroundabstract.com/wp-content/uploads/edd/2022/12/531-01-e1671189813139.jpg?resize=150150&ssl=1")
+    no-repeat;*/
   background-size: cover;
   transform: rotate(-8deg) translateY(-65%) scaleX(-1);
   z-index: -100;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 @media screen and (max-width: 420px) {
   .overlay {
@@ -157,7 +157,7 @@ tbody tr:nth-child(even) {
 
 .container {
   margin: auto;
-  width: 100%;
+  width: 95%;
   padding: 70px 0;
   display: flex;
   flex-direction: row;
@@ -237,7 +237,7 @@ tbody tr:nth-child(even) {
   border: 10px solid white;
 }
 .card.is-expanded .card__hero {
-  cursor: default !important;
+  display: none;
 }
 .card__body {
   padding: 1.5rem;
@@ -294,6 +294,7 @@ tbody tr:nth-child(even) {
     rgba(255, 255, 255, 0)
   );
   transition: all 200ms ease;
+  z-index: 100;
 }
 .card__expand:hover {
   background: linear-gradient(
@@ -341,6 +342,7 @@ tbody tr:nth-child(even) {
   cursor: pointer;
   transform: scale(1);
   transition: all 200ms ease;
+  min-width: 50px;
 }
 
 .card__buy:hover,
@@ -361,21 +363,24 @@ tbody tr:nth-child(even) {
 }
 
 .card.is-expanded .card__close {
-  margin-left: 10px;
-  transform: translateY(60px);
+  margin: -50px 0 0 10px;
   display: flex;
+  transform: translateY(60px);
+  position: absolute;
+  z-index: 500 !important;
 }
 
 .certification {
   position: absolute;
   transform: translateY(-390px);
   right: 10px;
-  margin-bottom: 10px; /* Add margin to separate it from the rest of the content */
+  margin-bottom: 10px;
+  z-index: 100;
 }
 
 .certification img {
   max-width: 100%;
-  max-height: 100px; /* Adjust the height as needed */
+  max-height: 100px;
   display: inline-block;
 }
 
@@ -786,9 +791,9 @@ body #tab-bar .tab > div span {
   margin: 0 auto;
   display: block;
   text-align: center;
+  z-index: 200;
 }
 
-/* Styles for the round button */
 #close-button {
   width: 40px;
   height: 40px;
@@ -797,21 +802,20 @@ body #tab-bar .tab > div span {
   color: #fff;
   border: none;
   cursor: pointer;
-  position: relative;
+  position: absolute;
   overflow: hidden;
   transition: background-color 0.3s;
   padding: 0; /* Remove padding to make lines equal to the radius */
   box-shadow: 4px 4px 2px 1px rgba(0, 0, 255, 0.2);
 }
 
-/* Styles for the "X" shape */
 .line {
   position: absolute;
-  width: 50%; /* Set line length to 50% of button width */
+  width: 50%;
   height: 2px;
   background-color: #fff;
   top: 50%;
-  left: 25%; /* Adjust left position for centering */
+  left: 25%;
   transform-origin: center;
 }
 
@@ -823,13 +827,11 @@ body #tab-bar .tab > div span {
   transform: rotate(-45deg);
 }
 
-/* Hover effect for the button */
 #close-button:hover {
   background-color: var(--primary);
 }
 
 /* Video player */
-
 .video-container {
   margin: auto;
   width: 100%;
@@ -850,4 +852,285 @@ body #tab-bar .tab > div span {
 
 .pc {
   display: block !important;
+}
+
+/*------------------------------------------------------------------------------*/
+
+.slider {
+  max-height: 400px;
+}
+
+.show {
+  max-height: 400px;
+  top: 0;
+}
+
+.slider,
+.slider > div {
+  background-position: center center;
+  display: none;
+  width: 100%;
+  height: 400px;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #000;
+  overflow: hidden;
+  -moz-transition: transform 0.4s;
+  -o-transition: transform 0.4s;
+  -webkit-transition: transform 0.4s;
+  transition: transform 0.4s;
+}
+
+.card.is-expanded .slider,
+.slider > div {
+  display: block;
+}
+
+.slider > div {
+  position: absolute;
+}
+
+.slider > i {
+  color: #5672a7;
+  position: absolute;
+  font-size: 60px;
+  margin: 20px;
+  top: 40%;
+  text-shadow: 0 10px 2px #223422;
+  transition: 0.3s;
+  width: 30px;
+  padding: 10px 13px;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  line-height: 0;
+  box-sizing: content-box;
+  border-radius: 3px;
+  z-index: 4;
+}
+
+.slider > i svg {
+  margin-top: 3px;
+}
+
+.slider > .left {
+  left: -100px;
+}
+.slider > .right {
+  right: -100px;
+}
+.slider:hover > .left {
+  left: 0;
+}
+.slider:hover > .right {
+  right: 0;
+}
+
+.slider > i:hover {
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateX(-2px);
+}
+
+.slider > i.right:hover {
+  transform: translateX(2px);
+}
+
+.slider > i.right:active,
+.slider > i.left:active {
+  transform: translateY(1px);
+}
+
+.slider:hover > div {
+  transform: scale(1.01);
+}
+
+.hoverZoomOff:hover > div {
+  transform: scale(1);
+}
+
+/* The Dots */
+.slider > ul {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  z-index: 4;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.slider > ul > li {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  list-style: none;
+  margin: 10px 5px;
+  cursor: pointer;
+  border: 1px solid #fff;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.slider > ul > .showli {
+  background-color: #5672a7;
+  -moz-animation: boing 0.5s forwards;
+  -o-animation: boing 0.5s forwards;
+  -webkit-animation: boing 0.5s forwards;
+  animation: boing 0.5s forwards;
+}
+
+.slider > ul > li:hover {
+  background-color: #5672a7;
+}
+
+.slider > .show {
+  z-index: 1;
+}
+
+.hideDots > ul {
+  display: none;
+}
+
+.showArrows > .left {
+  left: 0;
+}
+
+.showArrows > .right {
+  right: 0;
+}
+
+.slider > div span {
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  text-align: center;
+  padding: 0;
+  width: 100%;
+}
+
+@keyframes boing {
+  0% {
+    transform: scale(1.2);
+  }
+  40% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  80% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*-----------------------------------------------------------------------------------*/
+
+.carousel {
+  padding: 0 30px;
+  display: none !important;
+}
+
+.carousel a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.slide img {
+  width: 200px !important;
+}
+
+.carousel.slick-initialized {
+  display: block !important;
+}
+
+.slick-slide {
+  margin: 0 10px;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.slider ul li {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.slick-slide .wrapInfoPost {
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  margin-right: 10px;
+  box-sizing: border-box;
+}
+
+/* Add this style to hide the carousel initially */
+.carousel:not(.slick-initialized) {
+  visibility: hidden;
+}
+
+.slick-slide .wrapInfoPost h1 {
+  margin: 0;
+}
+.slick-slide .wrapInfoPost .prix {
+  font-size: 150%;
+  color: #5672a7;
+}
+.slick-slide .wrapInfoPost p {
+  margin: 0 auto;
+  font-size: 100%;
+}
+
+.slick-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  background: none;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  color: #000;
+}
+.slick-arrow:hover,
+.slick-arrow:focus,
+.slick-arrow:active {
+  color: #5672a7;
+  outline: 0;
+}
+.slick-arrow.slick-prev {
+  left: 0;
+}
+.slick-arrow.slick-next {
+  right: 0;
+}
+
+.hr__carousel {
+  width: 100%;
+  margin-top: 25px;
+  border: 0;
+  margin: 1.35em auto;
+  max-width: 100%;
+  background-position: 50%;
+  box-sizing: border-box;
+  height: 6px;
+  background-image: radial-gradient(
+    closest-side,
+    gray,
+    rgba(128, 128, 128, 0) 100%
+  );
+  position: relative;
+}
+
+.related {
+  margin: 20px auto;
+  text-align: center;
 }

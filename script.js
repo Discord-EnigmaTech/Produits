@@ -93,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     hero.addEventListener("click", function () {
-      // Add this event listener
       closeAllCardsExcept(card);
       if (!card.classList.contains("is-expanded")) {
         card.classList.add("is-expanded");
@@ -667,4 +666,179 @@ $(document).ready(function () {
     $(".sf-field-submit").removeClass("submitactive");
     checkedCheckboxes = []; // Clear the checked checkboxes array
   });
+});
+
+//----------------------------------------------------------------------------------------------------
+
+(function ($) {
+  "use strict";
+  $.fn.sliderResponsive = function (settings) {
+    var set = $.extend(
+      {
+        slidePause: 5000,
+        fadeSpeed: 800,
+        autoPlay: "on",
+        showArrows: "off",
+        hideDots: "off",
+        hoverZoom: "on",
+        titleBarTop: "off",
+      },
+      settings
+    );
+
+    var $slider = $(this);
+    var size = $slider.find("> div").length; //number of slides
+    var position = 0; // current position of carousal
+    var sliderIntervalID; // used to clear autoplay
+
+    // Add a Dot for each slide
+    $slider.append("<ul></ul>");
+    $slider.find("> div").each(function () {
+      $slider.find("> ul").append("<li></li>");
+    });
+
+    // Put .show on the first Slide
+    $slider.find("div:first-of-type").addClass("show");
+
+    // Put .showLi on the first dot
+    $slider.find("li:first-of-type").addClass("showli");
+
+    //fadeout all items except .show
+    $slider.find("> div").not(".show").fadeOut();
+
+    // If Autoplay is set to 'on' than start it
+    if (set.autoPlay === "on") {
+      startSlider();
+    }
+
+    // If showarrows is set to 'on' then don't hide them
+    if (set.showArrows === "on") {
+      $slider.addClass("showArrows");
+    }
+
+    // If hideDots is set to 'on' then hide them
+    if (set.hideDots === "on") {
+      $slider.addClass("hideDots");
+    }
+
+    // If hoverZoom is set to 'off' then stop it
+    if (set.hoverZoom === "off") {
+      $slider.addClass("hoverZoomOff");
+    }
+
+    // If titleBarTop is set to 'on' then move it up
+    if (set.titleBarTop === "on") {
+      $slider.addClass("titleBarTop");
+    }
+
+    // function to start auto play
+    function startSlider() {
+      sliderIntervalID = setInterval(function () {
+        nextSlide();
+      }, set.slidePause);
+    }
+
+    // on mouseover stop the autoplay and clear interval
+    $slider.mouseover(function () {
+      clearInterval(sliderIntervalID);
+    });
+
+    // on mouseout starts the autoplay by calling startSlider
+    $slider.mouseout(function () {
+      startSlider();
+    });
+
+    //on right arrow click
+    $slider.find("> .right").click(nextSlide);
+
+    //on left arrow click
+    $slider.find("> .left").click(prevSlide);
+
+    // Go to next slide
+    function nextSlide() {
+      position = $slider.find(".show").index() + 1;
+      if (position > size - 1) position = 0;
+      changeCarousel(position);
+    }
+
+    // Go to previous slide
+    function prevSlide() {
+      position = $slider.find(".show").index() - 1;
+      if (position < 0) position = size - 1;
+      changeCarousel(position);
+    }
+
+    //when user clicks slider button
+    $slider.find(" > ul > li").click(function () {
+      position = $(this).index();
+      changeCarousel($(this).index());
+    });
+
+    //this changes the image and button selection
+    function changeCarousel() {
+      $slider.find(".show").removeClass("show").fadeOut();
+      $slider.find("> div").eq(position).fadeIn(set.fadeSpeed).addClass("show");
+      // The Dots
+      $slider.find("> ul").find(".showli").removeClass("showli");
+      $slider.find("> ul > li").eq(position).addClass("showli");
+    }
+
+    return $slider;
+  };
+})(jQuery);
+
+//////////////////////////////////////////////
+// Activate each slider - change options
+//////////////////////////////////////////////
+$(document).ready(function () {
+  for (var i = 1; i <= 100; i++) {
+    $("#slider" + i).sliderResponsive({
+      // Using default everything
+      // slidePause: 5000,
+      // fadeSpeed: 800,
+      // autoPlay: "on",
+      // showArrows: "off",
+      // hideDots: "off",
+      // hoverZoom: "on",
+      // titleBarTop: "off"
+    });
+  }
+});
+
+//-----------------------------------------------------------------------------------------------------
+
+$(document).ready(function () {
+  function initializeCarousels() {
+    $(".carousel").slick({
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      prevArrow:
+        '<button type="button" class="slick-prev"><span class="fa fa-angle-left"></span></button>',
+      nextArrow:
+        '<button type="button" class="slick-next"><span class="fa fa-angle-right"></span></button>',
+      responsive: [
+        {
+          breakpoint: 767,
+          settings: {
+            slidesToShow: 2,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+          },
+        },
+      ],
+    });
+  }
+
+  function refreshCarousels() {
+    $(".carousel").slick("refresh");
+  }
+
+  initializeCarousels();
+
+  setInterval(refreshCarousels, 2000);
 });
