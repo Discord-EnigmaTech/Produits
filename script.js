@@ -833,12 +833,17 @@ $(document).ready(function () {
       ],
     });
   }
+  initializeCarousels();
+});
+
+$(document).ready(function () {
+  $(".card__expand, .card__hero").on("click", function () {
+    setTimeout(function () {
+      refreshCarousels();
+    }, 100);
+  });
 
   function refreshCarousels() {
     $(".carousel").slick("refresh");
   }
-
-  initializeCarousels();
-
-  setInterval(refreshCarousels, 2000);
 });
