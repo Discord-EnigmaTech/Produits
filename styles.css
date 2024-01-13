@@ -22,6 +22,7 @@ html,
 body {
   width: 100%;
   height: 100%;
+  overflow-x: hidden !important;
 }
 
 body {
@@ -31,7 +32,7 @@ body {
   font-family: "Work Sans", sans-serif;
   display: block;
   margin: 0 auto;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 h1,
@@ -89,22 +90,22 @@ tbody tr:nth-child(even) {
 }
 
 .overlay {
-  position: absolute; /* Change to relative or absolute based on your layout */
+  position: absolute;
   top: -200px;
-  left: -50px;
+  left: -10vw; /* Adjusted from -50px to -5vw */
   width: 120%;
-  height: 50vh; /* Set a fixed height for the hero image */
+  height: 50vh;
   background: url("Assets/Photo by Richard Horvath on Unsplash.webp") no-repeat;
   background-size: cover;
-  transform: rotate(-8deg); /* Remove translateY and translateX */
+  transform: rotate(-8deg);
   will-change: transform;
   z-index: -100;
   overflow: hidden !important;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 768px) {
   .overlay {
-    top: -100px;
+    top: -75px;
   }
 }
 
@@ -1118,6 +1119,7 @@ body #tab-bar .tab > div span {
 
 .slide img {
   max-width: 200px !important;
+  align-self: center;
 }
 
 @media screen and (max-width: 768px) {
@@ -1131,7 +1133,7 @@ body #tab-bar .tab > div span {
 }
 
 .slick-slide {
-  margin: 0 10px;
+  margin: 0 10px 0 25px;
   flex: 0 0 auto;
   overflow: hidden;
 }
@@ -1144,7 +1146,7 @@ body #tab-bar .tab > div span {
   position: relative;
   background: #fff;
   padding: 20px;
-  margin-right: 10px;
+  margin: 0 10px 0 10px;
   box-sizing: border-box;
 }
 
