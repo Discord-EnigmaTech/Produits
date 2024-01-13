@@ -96,10 +96,16 @@ tbody tr:nth-child(even) {
   background: url("Assets/Photo by Richard Horvath on Unsplash.webp") no-repeat;
   background-size: cover;
   backdrop-filter: blur(10px) !important;
-  transform: rotate(-8deg) translateY(-65%) translateX(100px);
+  transform: rotate(-8deg) translateY(-35vw) translateX(100px);
   will-change: transform;
   z-index: -100;
   overflow: hidden !important;
+}
+
+@media screen and (max-width: 1400px) {
+  .overlay {
+    transform: rotate(-8deg) translateY(-500px) translateX(100px);
+  }
 }
 
 /* loading */

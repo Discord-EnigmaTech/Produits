@@ -82,7 +82,6 @@ let hiddenCards = [];
 let appliedFilters = [];
 let invisibleCards = [];
 
-/* Product Cards */
 document.addEventListener("DOMContentLoaded", function () {
   const cards = document.querySelectorAll(".card");
   cards.forEach(function (card) {
@@ -91,14 +90,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeButton = card.querySelector(".card__close");
     const hero = card.querySelector(".card__hero");
 
-    expandButton.addEventListener("click", function () {
+    function handleClick() {
       closeAllCardsExcept(card);
       if (!card.classList.contains("is-expanded")) {
         card.classList.add("is-expanded");
         expandButton.style.display = "none";
         constrictButton.style.display = "block";
+        setTimeout(function () {
+          refreshCarousels();
+        }, 10);
       }
-    });
+    }
+
+    expandButton.addEventListener("click", handleClick);
+    hero.addEventListener("click", handleClick);
 
     constrictButton.addEventListener("click", function () {
       card.classList.remove("is-expanded");
@@ -113,15 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
       expandButton.style.display = "block";
       showOnlyInvisibleCards();
       performFilter();
-    });
-
-    hero.addEventListener("click", function () {
-      closeAllCardsExcept(card);
-      if (!card.classList.contains("is-expanded")) {
-        card.classList.add("is-expanded");
-        expandButton.style.display = "none";
-        constrictButton.style.display = "block";
-      }
     });
 
     function closeAllCardsExcept(exceptCard) {
@@ -859,14 +855,6 @@ $(document).ready(function () {
   initializeCarousels();
 });
 
-$(document).ready(function () {
-  $(".card__expand, .card__hero").on("click", function () {
-    setTimeout(function () {
-      refreshCarousels();
-    }, 100);
-  });
-
-  function refreshCarousels() {
-    $(".carousel").slick("refresh");
-  }
-});
+function refreshCarousels() {
+  $(".carousel").slick("refresh");
+}
