@@ -5,6 +5,7 @@
   --light-primary: #7895cb;
   --primary: #5672a7;
   --dark-primary: #1e355f;
+  --background: #7895cb6e;
 }
 
 html {
@@ -89,29 +90,87 @@ tbody tr:nth-child(even) {
 .overlay {
   position: fixed;
   top: 0;
-  left: -100px;
-  right: -100px;
+  left: calc(-100px + 0.5vw);
+  right: calc(-100px + 0.5vw);
   bottom: 0;
-  background: url("bg.webp") no-repeat;
-  /*background: url("https://i0.wp.com/backgroundabstract.com/wp-content/uploads/edd/2022/12/531-01-e1671189813139.jpg?resize=150150&ssl=1")
-    no-repeat;*/
+  background: url("Assets/Photo by Richard Horvath on Unsplash.webp") no-repeat;
   background-size: cover;
-  transform: rotate(-8deg) translateY(-65%) scaleX(-1);
+  backdrop-filter: blur(10px) !important;
+  transform: rotate(-8deg) translateY(-65%) translateX(100px);
+  will-change: transform;
   z-index: -100;
   overflow: hidden !important;
 }
-@media screen and (max-width: 420px) {
-  .overlay {
-    transform: rotate(-8deg) translateY(-55%);
+
+/* loading */
+.loading {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 10px;
+  left: 0;
+  background: #000;
+  transition: 0.75s;
+  z-index: 1000;
+}
+
+.loading-progress-bg {
+  background: #000;
+  top: -11px;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  transition: 0.35s;
+}
+
+.loading-progress {
+  height: 11px;
+  background: #000;
+  top: -11px;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  transition: 0.35s;
+}
+
+.loading-title,
+.loading-subtitle {
+  color: #fff;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loading-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 8vw;
+  letter-spacing: 0.085em;
+  margin: 4.5rem 0 1rem;
+}
+
+.loading-subtitle {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 15rem;
+}
+
+@media screen and (max-width: 769px) {
+  .loading-subtitle {
+    font-size: 5vw;
   }
 }
+
+/* main */
 
 .amazon {
   width: 100%;
   margin: 0 auto;
   justify-content: center;
   padding: 50px 0;
-  background-color: var(--light-primary) 6e;
+  background-color: var(--background);
 }
 
 .amazon a {
@@ -444,9 +503,9 @@ tbody tr:nth-child(even) {
 #search-input {
   margin: 20px auto;
   width: 70%;
-  display: block; /* Ensure it takes up the full width */
-  margin-left: auto; /* Center horizontally */
-  margin-right: auto; /* Center horizontally */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 .search-results-block {
   position: relative;
@@ -499,10 +558,10 @@ tbody tr:nth-child(even) {
 @media screen and (max-width: 400px) {
   #wrapper {
     width: 95%;
-    margin: 0 auto; /* Center the div horizontally */
+    margin: 0 auto;
     top: 10%;
     left: 0;
-    right: 0; /* Reset left and right for centering */
+    right: 0;
   }
   .container-price {
     padding-top: 25px;
@@ -517,12 +576,12 @@ tbody tr:nth-child(even) {
     max-height: 95vh;
     margin-top: 0;
     top: 2.5%;
-    overflow: auto !important; /* Add this line to make content scrollable */
+    overflow: auto !important;
   }
 
   ._sf_submit {
-    position: absolute !important; /* Position this element absolutely */
-    bottom: 0 !important; /* Place it at the bottom of the parent "wrapper" */
+    position: absolute !important;
+    bottom: 0 !important;
   }
 }
 
@@ -1047,8 +1106,18 @@ body #tab-bar .tab > div span {
   color: inherit;
 }
 
+.slick-arrow {
+  z-index: 100;
+}
+
 .slide img {
-  width: 200px !important;
+  max-width: 200px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .slide img {
+    max-width: 40vw !important;
+  }
 }
 
 .carousel.slick-initialized {
