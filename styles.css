@@ -31,6 +31,7 @@ body {
   font-family: "Work Sans", sans-serif;
   display: block;
   margin: 0 auto;
+  overflow-x: hidden;
 }
 
 h1,
@@ -88,23 +89,22 @@ tbody tr:nth-child(even) {
 }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: calc(-100px + 0.5vw);
-  right: calc(-100px + 0.5vw);
-  bottom: 0;
+  position: absolute; /* Change to relative or absolute based on your layout */
+  top: -200px;
+  left: -50px;
+  width: 120%;
+  height: 50vh; /* Set a fixed height for the hero image */
   background: url("Assets/Photo by Richard Horvath on Unsplash.webp") no-repeat;
   background-size: cover;
-  backdrop-filter: blur(10px) !important;
-  transform: rotate(-8deg) translateY(-35vw) translateX(100px);
+  transform: rotate(-8deg); /* Remove translateY and translateX */
   will-change: transform;
   z-index: -100;
   overflow: hidden !important;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1000px) {
   .overlay {
-    transform: rotate(-8deg) translateY(-500px) translateX(100px);
+    top: -100px;
   }
 }
 
