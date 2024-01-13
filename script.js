@@ -1,26 +1,3 @@
-/* Loading */
-
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-// fake loader
-let progress = 0;
-const fakeLoaderInterval = window.setInterval(function () {
-  const $lp = $(".loading-progress");
-  progress = progress + getRandomArbitrary(10, 25);
-  $lp.css("transform", `translateX(${progress}%)`);
-
-  if (progress >= 75) {
-    window.clearInterval(fakeLoaderInterval);
-    $lp.css("transform", "translateX(100%)");
-    setTimeout(
-      () => $(".loading").css("transform", "translateY(calc(100% + 10px))"),
-      400
-    );
-  }
-}, getRandomArbitrary(100, 500));
-
 /* Top menu */
 
 var phase = 0;
@@ -82,6 +59,7 @@ let hiddenCards = [];
 let appliedFilters = [];
 let invisibleCards = [];
 
+/* Product Cards */
 document.addEventListener("DOMContentLoaded", function () {
   const cards = document.querySelectorAll(".card");
   cards.forEach(function (card) {
@@ -90,20 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeButton = card.querySelector(".card__close");
     const hero = card.querySelector(".card__hero");
 
-    function handleClick() {
+    expandButton.addEventListener("click", function () {
       closeAllCardsExcept(card);
       if (!card.classList.contains("is-expanded")) {
         card.classList.add("is-expanded");
         expandButton.style.display = "none";
         constrictButton.style.display = "block";
-        setTimeout(function () {
-          refreshCarousels();
-        }, 10);
       }
-    }
-
-    expandButton.addEventListener("click", handleClick);
-    hero.addEventListener("click", handleClick);
+    });
 
     constrictButton.addEventListener("click", function () {
       card.classList.remove("is-expanded");
@@ -118,6 +90,15 @@ document.addEventListener("DOMContentLoaded", function () {
       expandButton.style.display = "block";
       showOnlyInvisibleCards();
       performFilter();
+    });
+
+    hero.addEventListener("click", function () {
+      closeAllCardsExcept(card);
+      if (!card.classList.contains("is-expanded")) {
+        card.classList.add("is-expanded");
+        expandButton.style.display = "none";
+        constrictButton.style.display = "block";
+      }
     });
 
     function closeAllCardsExcept(exceptCard) {
@@ -854,7 +835,3 @@ $(document).ready(function () {
   }
   initializeCarousels();
 });
-
-function refreshCarousels() {
-  $(".carousel").slick("refresh");
-}
