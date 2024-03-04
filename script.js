@@ -8,7 +8,7 @@ function getRandomArbitrary(min, max) {
 let progress = 0;
 const fakeLoaderInterval = window.setInterval(function () {
   const $lp = $(".loading-progress");
-  progress = progress + getRandomArbitrary(10, 25);
+  progress = progress + getRandomArbitrary(0, 10);
   $lp.css("transform", `translateX(${progress}%)`);
 
   if (progress >= 75) {
@@ -16,67 +16,57 @@ const fakeLoaderInterval = window.setInterval(function () {
     $lp.css("transform", "translateX(100%)");
     setTimeout(
       () => $(".loading").css("transform", "translateY(calc(100% + 10px))"),
-      400
+      100
     );
   }
-}, getRandomArbitrary(100, 500));
+}, getRandomArbitrary(0, 25));
 
 /* Top menu */
 
 var phase = 0;
-$("#tab-bar .tab")
-  .mousedown(function () {
-    if (!$(this).is(".active") && phase == 0) {
+
+$("#tab-bar .tab").on("mousedown mouseup", function (event) {
+  var $this = $(this); // Cache this to avoid multiple jQuery lookups
+  var isActive = $this.hasClass("active");
+
+  if (event.type === "mousedown") {
+    if (!isActive && phase === 0) {
       phase = 1;
-      $(".tab.active div").animate(
-        {
-          top: 0,
-        },
-        250,
-        function () {
-          $(".tab div").removeAttr("style");
-          $(".tab.active").removeClass("active");
-        }
-      );
+      $(".tab.active div").animate({ top: 0 }, 250, function () {
+        $(".tab div").removeAttr("style");
+        $(".tab.active").removeClass("active");
+      });
     }
-  })
-  .mouseup(function () {
-    $this = $(this);
-    if (!$(this).is(".active") && phase == 1) {
+  } else if (event.type === "mouseup") {
+    if (!isActive && phase === 1) {
       phase = 2;
-      $(this)
-        .find("div")
-        .animate(
-          {
-            top: 0,
-          },
-          250,
-          function () {
-            $this.find("div").removeAttr("style");
-            $this.addClass("active");
-            phase = 0;
+      $this.find("div").animate({ top: 0 }, 250, function () {
+        $this.find("div").removeAttr("style").end().addClass("active");
+        phase = 0;
 
-            // Check if it's the first button (house) and navigate to the link
-            if ($this.index() === 0) {
-              window.open("https://enigmatech.site", "_blank");
-            } else if ($this.index() === 1) {
-              // Show the #wrapper and mark it as active
-              $("#wrapper")
-                .addClass("active")
-                .css("opacity", 1)
-                .css("display", "block"); // Display the wrapper with opacity 1 immediately
-              $("#tab-bar .tab:eq(2)").removeClass("active");
-
-              // Apply blur to everything except the #wrapper and its children
-              $("body *:not(#wrapper, #wrapper *)").css("filter", "blur(5px)");
-            } else if ($this.index() === 2) {
-              window.history.pushState({}, "", window.location.pathname);
-              location.reload();
-            }
-          }
-        );
+        switch ($this.index()) {
+          case 0:
+            window.open("https://enigmatech.site", "_blank");
+            break;
+          case 1:
+            $("#wrapper").addClass("active").css({
+              opacity: 1,
+              display: "block",
+            });
+            $("#tab-bar .tab:eq(2)").removeClass("active");
+            $("#blur-overlay").show();
+            break;
+          case 2:
+            window.history.pushState({}, "", window.location.pathname);
+            location.reload();
+            break;
+        }
+      });
     }
-  });
+  }
+});
+
+/* Card logic */
 
 let hiddenCards = [];
 let appliedFilters = [];
@@ -96,9 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
         card.classList.add("is-expanded");
         expandButton.style.display = "none";
         constrictButton.style.display = "block";
-        setTimeout(function () {
-          refreshCarousels();
-        }, 10);
       }
     }
 
@@ -299,24 +286,29 @@ $(document).ready(function () {
       })
       .get();
 
-    const minPrice = parseFloat($("#min_price").val().replace(/,/g, ".")) || 0;
+    const minPrice =
+      parseFloat($("#min_price").val().replace(/,/g, ".").replace(/\s/g, "")) ||
+      0;
     const maxPrice =
-      parseFloat($("#max_price").val().replace(/,/g, ".")) || Infinity;
+      parseFloat($("#max_price").val().replace(/,/g, ".").replace(/\s/g, "")) ||
+      Infinity;
     const searchQuery = $("#search-input").val().toLowerCase();
 
-    hiddenCardCount = 0;
+    let hiddenCardCount = 0;
 
     $(".card").each(function () {
       const card = $(this);
       const cardId = card.attr("id").split(" ")[0];
       const cardTitle = card.find(".card__title").text().toLowerCase();
 
-      // card price :
+      // card price:
       const cardDescText = card.find(".card__desc").text();
-      const priceMatches = cardDescText.match(/([\d.,]+)€/);
+      const priceMatches = cardDescText.match(/([\d\s,]+)€/); // Adjusted regex to include space character
       let cardPrice = 0; // Default value if no price is found
       if (priceMatches && priceMatches.length > 1) {
-        const extractedPrice = priceMatches[1].replace(/,/g, ".");
+        const extractedPrice = priceMatches[1]
+          .replace(/,/g, ".")
+          .replace(/\s/g, ""); // Remove spaces and replace commas with dots
         cardPrice = parseFloat(extractedPrice) || 0;
       }
 
@@ -570,22 +562,20 @@ $(document).ready(function () {
     $(this).closest("li").addClass("active");
   });
   $(document).ready(function () {
-    // Your existing code for opening the menu on a trigger click
     $("#menu-trigger").click(function () {
       $("#filter").addClass("active");
     });
-    // Close the menu when the close button is clicked
     $("#close-button").click(function () {
-      // Reduce the opacity of the wrapper to 0
       $("#wrapper").css("opacity", 0);
 
-      // After a brief delay, hide the wrapper and deactivate the button
       setTimeout(function () {
         $("#wrapper").css("display", "none");
-      }, 100); // Adjust the delay as needed
-      $("body *:not(#wrapper, #wrapper *)").css("filter", "none");
+        $("#blur-overlay").hide();
+      }, 10);
+
       $("#tab-bar .tab:eq(1)").removeClass("active");
     });
+
     // Close the menu when a click occurs outside the menu
     $(document).on("click", function (e) {
       if (!$(e.target).closest("#filter, #menu-trigger").length) {
@@ -827,7 +817,13 @@ $(document).ready(function () {
 //-----------------------------------------------------------------------------------------------------
 
 $(document).ready(function () {
-  function initializeCarousels() {
+  function setCarouselWidth() {
+    if ($(window).width() >= 1200) {
+      $(".carousel").css("width", "900px"); // Set to fixed width on desktop
+    } else {
+      $(".carousel").css("width", "80vw"); // Set to 90% of viewport width on smaller screens
+    }
+
     $(".carousel").slick({
       infinite: true,
       slidesToShow: 3,
@@ -838,13 +834,13 @@ $(document).ready(function () {
         '<button type="button" class="slick-next"><span class="fa fa-angle-right"></span></button>',
       responsive: [
         {
-          breakpoint: 767,
+          breakpoint: 1000,
           settings: {
             slidesToShow: 2,
           },
         },
         {
-          breakpoint: 480,
+          breakpoint: 700,
           settings: {
             slidesToShow: 1,
           },
@@ -852,9 +848,6 @@ $(document).ready(function () {
       ],
     });
   }
-  initializeCarousels();
-});
 
-function refreshCarousels() {
-  $(".carousel").slick("refresh");
-}
+  setCarouselWidth(); // Set the width before initializing carousels
+});

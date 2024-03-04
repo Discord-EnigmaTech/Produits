@@ -85,14 +85,27 @@ tbody tr:nth-child(even) {
   }
 }
 
-.no-blur {
-  filter: none !important;
+#blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Light white background for browsers that don't support backdrop-filter */
+  z-index: 999; /* Ensure it covers other elements */
 }
 
 .overlay {
   position: absolute;
   top: -200px;
-  left: -10vw; /* Adjusted from -50px to -5vw */
+  left: -10vw;
   width: 120%;
   height: 50vh;
   background: url("Assets/Photo by Richard Horvath on Unsplash.webp") no-repeat;
@@ -290,6 +303,7 @@ tbody tr:nth-child(even) {
 }
 .card.is-expanded p.card__intro {
   font-size: 22.5px;
+  line-height: 1.4;
 }
 .card__hero {
   position: relative;
@@ -321,12 +335,15 @@ tbody tr:nth-child(even) {
   height: auto;
 }
 .card__title {
-  margin: 0 0 0.3rem;
+  margin: 0 0 1rem;
   font-size: 2rem;
   overflow: hidden;
   max-width: 340px;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.card__subject {
+  margin-bottom: 30px;
 }
 .card.is-expanded .card__subject {
   width: 90% !important;
