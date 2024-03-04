@@ -829,9 +829,9 @@ $(document).ready(function () {
       slidesToShow: 3,
       slidesToScroll: 1,
       prevArrow:
-        '<button type="button" class="slick-prev"><span class="fa fa-angle-left"></span></button>',
+        '<button type="button" class="slick-prev"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><path fill="#000000" d="m8.369 12l4.747-8.968l1.768.936L10.632 12l4.252 8.032l-1.768.936z"/></svg></button>',
       nextArrow:
-        '<button type="button" class="slick-next"><span class="fa fa-angle-right"></span></button>',
+        '<button type="button" class="slick-next"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><path fill="#000000" d="m15.632 12l-4.748-8.968l-1.768.936L13.368 12l-4.252 8.032l1.768.936z"/></svg></button>',
       responsive: [
         {
           breakpoint: 1000,
