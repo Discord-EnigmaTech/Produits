@@ -86,9 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
         card.classList.add("is-expanded");
         expandButton.style.display = "none";
         constrictButton.style.display = "block";
-        setTimeout(function () {
-          refreshCarousels();
-        }, 10);
       }
     }
 
@@ -820,7 +817,13 @@ $(document).ready(function () {
 //-----------------------------------------------------------------------------------------------------
 
 $(document).ready(function () {
-  function initializeCarousels() {
+  function setCarouselWidth() {
+    if ($(window).width() >= 1200) {
+      $(".carousel").css("width", "900px"); // Set to fixed width on desktop
+    } else {
+      $(".carousel").css("width", "80vw"); // Set to 90% of viewport width on smaller screens
+    }
+
     $(".carousel").slick({
       infinite: true,
       slidesToShow: 3,
@@ -831,13 +834,13 @@ $(document).ready(function () {
         '<button type="button" class="slick-next"><span class="fa fa-angle-right"></span></button>',
       responsive: [
         {
-          breakpoint: 767,
+          breakpoint: 1000,
           settings: {
             slidesToShow: 2,
           },
         },
         {
-          breakpoint: 480,
+          breakpoint: 700,
           settings: {
             slidesToShow: 1,
           },
@@ -845,9 +848,6 @@ $(document).ready(function () {
       ],
     });
   }
-  initializeCarousels();
-});
 
-function refreshCarousels() {
-  $(".carousel").slick("refresh");
-}
+  setCarouselWidth(); // Set the width before initializing carousels
+});
