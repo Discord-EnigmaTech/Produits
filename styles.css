@@ -20,9 +20,11 @@ html {
 
 html,
 body {
-  width: 100%;
   height: 100%;
+  width: 100%;
   overflow-x: hidden !important;
+  margin: 0 auto;
+  padding: 0;
 }
 
 body {
@@ -31,8 +33,6 @@ body {
   justify-content: center;
   font-family: "Work Sans", sans-serif;
   display: block;
-  margin: 0 auto;
-  overflow-x: hidden !important;
 }
 
 h1,
@@ -48,6 +48,12 @@ hr {
   width: 90%;
   position: relative;
   top: 15px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .ui-slider {
+    display: none !important;
+  }
 }
 
 .top__hr {
@@ -93,33 +99,63 @@ tbody tr:nth-child(even) {
   height: 100%;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.5
-  ); /* Light white background for browsers that don't support backdrop-filter */
-  z-index: 999; /* Ensure it covers other elements */
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 999;
 }
 
-.overlay {
+.content-wrapper {
+  position: relative;
+  overflow: hidden;
+  top: 0;
+  width: 100%; /* or full viewport width */
+  height: 100vh; /* Adjust based on your design requirements */
+}
+
+.overlay-container {
   position: absolute;
   top: -200px;
   left: -10vw;
   width: 120%;
   height: 50vh;
-  background: url("Assets/Photo by Richard Horvath on Unsplash.webp") no-repeat;
-  background-size: cover;
   transform: rotate(-8deg);
-  will-change: transform;
   z-index: -100;
-  overflow: hidden !important;
 }
 
-@media screen and (max-width: 768px) {
-  .overlay {
-    top: -75px;
+.overlay-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 900px) {
+  .overlay-container {
+    top: -50px;
+    left: -10px;
+    width: 120%;
+    transform: rotate(-3deg);
   }
+
+  .overlay-container img {
+    height: 350px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .overlay-container {
+    top: -20px;
+    left: -7px;
+    width: 150%;
+    height: 500px;
+    transform: rotate(-3deg);
+  }
+
+  .overlay-container img {
+    height: 300px;
+  }
+}
+
+.price-range-block {
+  transform: translateY(-100vh);
 }
 
 /* loading */
@@ -186,6 +222,7 @@ tbody tr:nth-child(even) {
 /* main */
 
 .amazon {
+  transform: translateY(-75vh);
   width: 100%;
   margin: 0 auto;
   justify-content: center;
@@ -235,6 +272,7 @@ tbody tr:nth-child(even) {
 }
 
 .container {
+  transform: translateY(-100vh);
   margin: auto;
   width: 95%;
   padding: 70px 0;
@@ -865,7 +903,6 @@ body #tab-bar .tab > div span {
 
 /*------------------------------*/
 
-/* Styles for the button container */
 #button-container {
   position: absolute;
   top: 4px;
@@ -886,6 +923,8 @@ body #tab-bar .tab > div span {
   border: none;
   cursor: pointer;
   position: absolute;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Offset by half the width of the button */
   overflow: hidden;
   transition: background-color 0.3s;
   padding: 0; /* Remove padding to make lines equal to the radius */
@@ -916,6 +955,7 @@ body #tab-bar .tab > div span {
 
 /* Video player */
 .video-container {
+  transform: translateY(-100vh);
   margin: auto;
   width: 100%;
   padding: 70px 0 0 0;
