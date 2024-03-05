@@ -54,12 +54,6 @@ hr {
   display: none;
 }
 
-@media (hover: none) and (pointer: coarse) {
-  .ui-slider {
-    display: none !important;
-  }
-}
-
 .top__hr {
   top: 0px;
   margin-bottom: 0;
@@ -184,6 +178,7 @@ tbody tr:nth-child(even) {
 }
 
 .no {
+  transform: translateY(-100vh);
   width: 25%;
   margin: 50px auto;
   border-radius: 25px;
