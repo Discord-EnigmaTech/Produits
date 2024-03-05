@@ -1,26 +1,3 @@
-/* Loading */
-
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-// fake loader
-let progress = 0;
-const fakeLoaderInterval = window.setInterval(function () {
-  const $lp = $(".loading-progress");
-  progress = progress + getRandomArbitrary(0, 10);
-  $lp.css("transform", `translateX(${progress}%)`);
-
-  if (progress >= 75) {
-    window.clearInterval(fakeLoaderInterval);
-    $lp.css("transform", "translateX(100%)");
-    setTimeout(
-      () => $(".loading").css("transform", "translateY(calc(100% + 10px))"),
-      100
-    );
-  }
-}, getRandomArbitrary(0, 25));
-
 /* Top menu */
 
 var phase = 0;
@@ -80,32 +57,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeButton = card.querySelector(".card__close");
     const hero = card.querySelector(".card__hero");
 
-    function handleClick() {
+    function CardOpen() {
       closeAllCardsExcept(card);
       if (!card.classList.contains("is-expanded")) {
         card.classList.add("is-expanded");
         expandButton.style.display = "none";
         constrictButton.style.display = "block";
       }
+      var videoContainer = document.querySelector(".video-container");
+      if (videoContainer) {
+        videoContainer.style.display = "none";
+      }
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
     }
 
-    expandButton.addEventListener("click", handleClick);
-    hero.addEventListener("click", handleClick);
+    expandButton.addEventListener("click", CardOpen);
+    hero.addEventListener("click", CardOpen);
 
-    constrictButton.addEventListener("click", function () {
+    function CardClose() {
       card.classList.remove("is-expanded");
       constrictButton.style.display = "none";
       expandButton.style.display = "block";
       showOnlyInvisibleCards();
-    });
-
-    closeButton.addEventListener("click", function () {
-      card.classList.remove("is-expanded");
-      constrictButton.style.display = "none";
-      expandButton.style.display = "block";
-      showOnlyInvisibleCards();
+      var videoContainer = document.querySelector(".video-container");
+      if (videoContainer) {
+        videoContainer.style.display = ""; // Reset display property
+      }
+      updateCardState();
       performFilter();
-    });
+    }
+
+    constrictButton.addEventListener("click", CardClose);
+    closeButton.addEventListener("click", CardClose);
 
     function closeAllCardsExcept(exceptCard) {
       cards.forEach(function (currentCard) {

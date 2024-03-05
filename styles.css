@@ -50,6 +50,10 @@ hr {
   top: 15px;
 }
 
+.video-container iframe:not(.Default) {
+  display: none;
+}
+
 @media (hover: none) and (pointer: coarse) {
   .ui-slider {
     display: none !important;
@@ -156,67 +160,6 @@ tbody tr:nth-child(even) {
 
 .price-range-block {
   transform: translateY(-100vh);
-}
-
-/* loading */
-.loading {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 10px;
-  left: 0;
-  background: #000;
-  transition: 0.75s;
-  z-index: 1000;
-}
-
-.loading-progress-bg {
-  background: #000;
-  top: -11px;
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  transition: 0.35s;
-}
-
-.loading-progress {
-  height: 11px;
-  background: #000;
-  top: -11px;
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  transition: 0.35s;
-}
-
-.loading-title,
-.loading-subtitle {
-  color: #fff;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.loading-title {
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 8vw;
-  letter-spacing: 0.085em;
-  margin: 4.5rem 0 1rem;
-}
-
-.loading-subtitle {
-  text-align: center;
-  font-size: 2rem;
-  margin-top: 15rem;
-}
-
-@media screen and (max-width: 769px) {
-  .loading-subtitle {
-    font-size: 5vw;
-  }
 }
 
 /* main */
